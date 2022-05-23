@@ -1,0 +1,99 @@
+﻿@model BTNhom_MocPhuc.Models.KHACHHANG
+
+@{
+    ViewBag.Title = "DangKy";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+
+<div class="banner-page">
+    <h1 class="text-light fst-italic">Đăng Ký Tài Khoản</h1>
+</div>
+
+<div class="breadcrumb py-3">
+    <div class="container">
+        <a href="/">Trang chủ &nbsp;</a>
+        <span class="text-origin">Đăng ký tài khoản</span>
+    </div>
+</div>
+
+<div class="container d-flex flex-column align-items-center">
+    <form class="d-flex flex-column w-50 mt-4" method="post" action="/Site/DangKy">
+        @Html.AntiForgeryToken()
+
+
+        <h3 class="text-center">Đăng ký thông tin tài khoản</h3>
+
+        <div class="form-group mb-3 mt-2">
+            <label for="HO" class="form-label">Họ <span class="text-danger">*</span></label>
+            @Html.EditorFor(model => model.HO, new { htmlAttributes = new { @class = "form-control", @placeholder = "vd: Nguyễn" } })
+            @Html.ValidationMessageFor(model => model.HO, "", new { @class = "text-danger" })
+        </div>
+        <div class=" form-group mb-3">
+            <label for="TENDEM" class="form-label">Tên đệm </label>
+            @Html.EditorFor(model => model.TENDEM, new { htmlAttributes = new { @class = "form-control", @placeholder = "vd: Văn" } })
+            @Html.ValidationMessageFor(model => model.TENDEM, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group mb-3">
+            <label for="TEN" class="form-label">Tên <span class="text-danger">*</span></label>
+            @Html.EditorFor(model => model.TEN, new { htmlAttributes = new { @class = "form-control", @placeholder = "vd: Anh" } })
+            @Html.ValidationMessageFor(model => model.TEN, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group mb-3">
+            <label for="EMAIL" class="form-label">Email <span class="text-danger">*</span></label>
+            @Html.EditorFor(model => model.EMAIL, new { htmlAttributes = new { @class = "form-control", @type = "email", @placeholder = "vd: name@example.com" } })
+            @Html.ValidationMessageFor(model => model.EMAIL, "", new { @class = "text-danger" })
+            @if (ViewBag.error != null)
+            {
+                <span class="badge badge-danger">@ViewBag.error</span>
+            }
+
+        </div>
+        <div class="form-group mb-3">
+            <label for="PASS" class="form-label">Mật khẩu <span class="text-danger">*</span></label>
+            @Html.EditorFor(model => model.PASS, new { htmlAttributes = new { @class = "form-control", @type = "password" } })
+            @Html.ValidationMessageFor(model => model.PASS, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group mb-3">
+            <label for="ConfirmPassword" class="form-label">Xác nhận mật khẩu <span class="text-danger">*</span></label>
+            @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", @type = "password" } })
+            @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+            
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="SDT" class="form-label">SĐT <span class="text-danger">*</span></label>
+            @Html.EditorFor(model => model.SDT, new { htmlAttributes = new { @class = "form-control", @placeholder = "vd: 0708488401" } })
+            @Html.ValidationMessageFor(model => model.SDT, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group mb-3">
+            <label for="DIACHI" class="form-label">Địa chỉ <span class="text-danger">*</span></label>
+            @Html.EditorFor(model => model.DIACHI, new { htmlAttributes = new { @class = "form-control", @placeholder = "vd: 56KA Cù Lao Thượng, Vĩnh Thọ, Nha Trang, Khánh Hòa" } })
+            @Html.ValidationMessageFor(model => model.DIACHI, "", new { @class = "text-danger" })
+        </div>
+        <!--
+    <div class="mb-3">
+        <label class="form-label">Địa chỉ <span class="text-danger">*</span></label>
+        <div class="d-flex ">
+            <input type="text" class="form-control me-1" id="house-number" placeholder="Số nhà" required>
+            <input type="text" class="form-control me-1" id="wards" placeholder="Phường/Xã" required>
+            <input type="text" class="form-control me-1" id="city" placeholder="Thành phố" required>
+            <input type="text" class="form-control" id="province" placeholder="Tỉnh" required>
+        </div>
+    </div>
+    -->
+
+        <button class="btn btn-dark mx-auto mt-3" type="submit">ĐĂNG KÝ</button>
+    </form>
+
+    <!--
+        
+    <div class="w-50 mt-4 p-2 bg-gray d-flex flex-column align-items-center">
+        <p class="mb-1">Hoặc đăng nhập bằng</p>
+        <div>
+            <img width="129px" height="37px" alt="facebook-login-button" src="//bizweb.dktcdn.net/assets/admin/images/login/fb-btn.svg">
+            <img width="129px" height="37px" alt="google-login-button" src="//bizweb.dktcdn.net/assets/admin/images/login/gp-btn.svg">
+        </div>
+    </div>
+    -->
+</div>
+

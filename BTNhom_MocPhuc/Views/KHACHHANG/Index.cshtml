@@ -1,0 +1,76 @@
+﻿@model IEnumerable<BTNhom_MocPhuc.Models.KHACHHANG>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TEN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TENDEM)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DIACHI)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SDT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AVATAR)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EMAIL)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PASS)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TEN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TENDEM)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HO)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DIACHI)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SDT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AVATAR)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EMAIL)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PASS)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.MAKH }) |
+            @Html.ActionLink("Details", "Details", new { id=item.MAKH }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.MAKH })
+        </td>
+    </tr>
+}
+
+</table>

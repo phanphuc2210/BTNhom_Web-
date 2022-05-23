@@ -1,0 +1,117 @@
+﻿
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+
+<div class="banner">
+    <div id="banner-slide" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#banner-slide" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#banner-slide" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#banner-slide" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="https://bizweb.dktcdn.net/thumb/2048x2048/100/069/071/themes/852933/assets/slider_1.jpg?1646301253658" class="d-block w-100" alt="slide 1">
+            </div>
+            <div class="carousel-item">
+                <img src="/Images/banner2.jpg" class="d-block w-100" alt="slide 2">
+            </div>
+            <div class="carousel-item">
+                <img src="/Images/banner3.jpg" class="d-block w-100" alt="slide 3">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#banner-slide" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#banner-slide" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div>
+
+
+<div class="container product my-5 d-flex flex-column">
+    <h3 class="text-center">Sản phẩm bán chạy</h3>
+
+    <div class="row mt-3 gy-3">
+
+
+        @foreach (var item in ViewBag.SPBanChay)
+        {
+
+            <div class="col-3 " data-aos="zoom-in-up">
+                <div class="card w-100 product-item" style="width: 18rem;">
+                    <a href="SANPHAM/Details/@item.MASP">
+                        <img src="@item.IMG" class="card-img-top" alt="@item.TENSP">
+                    </a>
+                    <div class="card-body">
+                        <a href="SANPHAM/Details/@item.MASP" class="text-decoration-none text-dark">
+                            <h5 class="card-title fs-6 ">@item.TENSP</h5>
+                        </a>
+                        <p class="card-text text-danger">@item.GIABAN vnđ</p>
+
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+
+    <button type="button" class="btn btn-outline-dark mx-auto my-3">Xem thêm</button>
+</div>
+
+<div class="container banner my-5">
+    <div class="row">
+        <div class="col-4" data-aos="fade-right">
+            <img src="https://bizweb.dktcdn.net/thumb/2048x2048/100/360/933/themes/728303/assets/evo_banner_index_1.jpg?1638603834649" width="100%" />
+        </div>
+        <div class="col-4" data-aos="fade-up">
+            <img src="https://bizweb.dktcdn.net/thumb/2048x2048/100/360/933/themes/728303/assets/evo_banner_index_2.jpg?1638603834649" width="100%" />
+        </div>
+        <div class="col-4" data-aos="fade-right">
+            <img src="https://bizweb.dktcdn.net/thumb/2048x2048/100/360/933/themes/728303/assets/evo_banner_index_3.jpg?1638603834649" width="100%" />
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-6" data-aos="fade-right">
+            <img src="https://bizweb.dktcdn.net/thumb/2048x2048/100/360/933/themes/728303/assets/evo_banner_index_4.jpg?1638603834649" width="100%" />
+        </div>
+        <div class="col-6" data-aos="fade-left">
+            <img src="https://bizweb.dktcdn.net/thumb/2048x2048/100/360/933/themes/728303/assets/evo_banner_index_5.jpg?1638603834649" width="100%" />
+        </div>
+    </div>
+</div>
+
+<div class="container product my-5 d-flex flex-column">
+    <h3 class="text-center">Sản phẩm mới</h3>
+
+    <div class="row mt-3 gy-3">
+
+
+        @foreach (var item in ViewBag.SPMoi)
+        {
+            <div class="col-3 " data-aos="zoom-in-up">
+                <div class="card w-100 product-item" style="width: 18rem;">
+                    <a href="SANPHAM/Details/@item.MASP">
+                        <img src="@item.IMG" class="card-img-top" alt="@item.TENSP">
+                    </a>
+                    <div class="card-body">
+                        <a href="SANPHAM/Details/@item.MASP" class="text-decoration-none text-dark">
+                            <h5 class="card-title fs-6">@item.TENSP</h5>
+                        </a>
+                        <p class="card-text text-danger">@item.GIABAN vnđ</p>
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <button type="button" class="btn btn-outline-dark mx-auto my-3">Xem thêm</button>
+</div>
+
+

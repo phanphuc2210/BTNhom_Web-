@@ -1,0 +1,56 @@
+﻿@model BTNhom_MocPhuc.Models.KHACHHANG
+@{
+    ViewBag.Title = "DangNhap";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+
+<div class="banner-page">
+    <h1 class="text-light fst-italic">Đăng Nhập Tài Khoản</h1>
+</div>
+
+<div class="breadcrumb py-3">
+    <div class="container">
+        <a href="/">Trang chủ &nbsp;</a>
+        <span class="text-origin">Đăng nhập tài khoản</span>
+    </div>
+</div>
+
+<div class="container d-flex flex-column align-items-center">
+    <form class="d-flex flex-column w-50 mt-4" method="post" action="/Site/DangNhap">
+        @Html.AntiForgeryToken()
+
+
+        <h3 class="text-center">Đăng nhập tài khoản</h3>
+
+        @if (ViewBag.error != null)
+        {
+            <span class="badge badge-danger text-center">@ViewBag.error</span>
+        }
+
+        <div class="mb-3">
+            <label for="EMAIL" class="form-label">Email</label>
+            @Html.EditorFor(model => model.EMAIL, new { htmlAttributes = new { @class = "form-control", @type = "email", @placeholder = "vd: name@example.com" } })
+            @Html.ValidationMessageFor(model => model.EMAIL, "", new { @class = "text-danger" })
+        </div>
+        <div class="mb-3">
+            <label for="PASS" class="form-label">Mật khẩu</label>
+            @Html.EditorFor(model => model.PASS, new { htmlAttributes = new { @class = "form-control", @type = "password" } })
+            @Html.ValidationMessageFor(model => model.PASS, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="mb-3">
+            <a href="#" class="me-2 text-dark">Quên mật khẩu</a>
+            <a href="/Site/DangKy" class="text-origin">Đăng ký tài khoản mới</a>
+        </div>
+
+        <button class="btn btn-dark mx-auto mt-3" type="submit">ĐĂNG NHẬP</button>
+    </form>
+
+    <div class="w-50 mt-4 p-2 bg-gray d-flex flex-column align-items-center">
+        <p class="mb-1">Hoặc đăng nhập bằng</p>
+        <div>
+            <img width="129px" height="37px" alt="facebook-login-button" src="//bizweb.dktcdn.net/assets/admin/images/login/fb-btn.svg">
+            <img width="129px" height="37px" alt="google-login-button" src="//bizweb.dktcdn.net/assets/admin/images/login/gp-btn.svg">
+        </div>
+    </div>
+</div>

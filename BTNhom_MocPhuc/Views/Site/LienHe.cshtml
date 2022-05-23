@@ -1,0 +1,74 @@
+﻿
+@{
+    ViewBag.Title = "LienHe";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+
+<div class="banner-page">
+    <h1 class="text-light fst-italic">Liên Hệ</h1>
+</div>
+
+<div class="breadcrumb py-3">
+    <div class="container">
+        <a href="/">Trang chủ &nbsp;</a>
+        <span class="text-origin">Liên hệ</span>
+    </div>
+</div>
+
+<div class="container">
+    <iframe class="mt-4" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3898.706224032141!2d109.20018721475309!3d12.268148933241923!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317067ed3a052f11%3A0xd464ee0a6e53e8b7!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBOaGEgVHJhbmc!5e0!3m2!1svi!2s!4v1650799611926!5m2!1svi!2s" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+    <div class="row gx-5 mt-5">
+        <div class="col-lg-6">
+            <form>
+                <h3>Liên hệ với chúng tôi</h3>
+
+                <div class="mb-3 mt-4">
+                    <label for="name" class="form-label">Họ và tên <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="name" placeholder="vd: Nguyễn Văn A" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email address <span class="text-danger">*</span></label>
+                    <input type="email" class="form-control" id="email" placeholder="name@example.com" required>
+                </div>
+                <div class="mb-3">
+                    <label for="comment" class="form-label">Viết bình luận <span class="text-danger">*</span></label>
+                    <textarea class="form-control" id="comment" rows="3" required></textarea>
+                </div>
+
+                <button class="btn btn-dark" type="submit">Gửi liên hệ</button>
+            </form>
+        </div>
+        <div class="col-lg-6">
+            <p class="fs-1 fw-bolder text-origin">MộcPhúc.</p>
+            <p class="text-justify">
+                Mộc Phúc là một trong những trại mộc cung cấp sản phẩm nội thất gỗ chất lượng và uy tín nhất tại Nha Trang
+                với hơn 17 năm kinh nghiệm trong lĩnh vực làm mộc.
+            </p>
+            <ul class="p-0">
+                <li class="d-flex">
+                    <span class="me-2"><i class="bi bi-geo-alt-fill"></i></span>
+                    <span class="mb-3">
+                        Số 40 ngõ Ngọc Sơn<br />
+                        Tổ 20 Hòn Nghê 2, Nha Trang<br />
+                        Việt Nam
+                    </span>
+                </li>
+                <li class="d-flex">
+                    <span class="me-2"><i class="bi bi-telephone-fill"></i></span>
+                    <p>
+                        <a href="#" class="text-decoration-none text-dark">+84 708 488 401</a>
+                        <br />
+                        <a href="#" class="text-decoration-none text-dark">+84 935 703 414</a>
+                    </p>
+                </li>
+                <li class="d-flex">
+                    <span class="me-2"><i class="bi bi-envelope-fill"></i></span>
+                    <p><a href="#" class="text-decoration-none text-dark">mocphuc@gmail.com</a></p>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
