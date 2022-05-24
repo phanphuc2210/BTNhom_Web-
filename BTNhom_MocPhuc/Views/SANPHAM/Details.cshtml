@@ -20,7 +20,7 @@
 <div class="container">
     <div class="row my-4">
         <div class="col-lg-5">
-            <img src="@Model.IMG" width="100%">
+            <img src="/Images/@Model.IMG" width="100%">
         </div>
         <div class="col-lg-7 d-flex flex-column">
             <h3>@Model.TENSP</h3>
@@ -35,7 +35,7 @@
                 @Model.MOTA
             </p>
 
-            <h3 class="mt-3 text-danger">@Model.GIABAN vnđ</h3>
+            <h3 class="mt-3 text-danger">@Model.GIABAN.Value.ToString("N0") vnđ</h3>
 
             <div class="mt-auto">
                 <div class="form-group">
@@ -45,7 +45,7 @@
                     <span class="btn fw-bold" onclick='handleIncrease()'>+</span>
                 </div>
 
-                <button class="btn btn-dark w-100 mt-3">Thêm vào giỏ hàng</button>
+                <a role="button" class="btn btn-dark w-100 mt-3" href="/Cart/AddItem?maSP=@Model.MASP&soLuong=1">Thêm vào giỏ hàng</a>
             </div>
         </div>
     </div>
@@ -104,35 +104,35 @@
     <div>
         <h5>Đánh Giá - Nhận Xét Từ Khách Hàng</h5>
 
-        <form class="d-flex mt-3">
-            <input type="text" class="form-control w-75 me-2" id="comment" placeholder="Bình luận gì đó...">
+        <form class="d-flex mt-3" method="post" action="/KHACHHANG/BinhLuan/@Model.MASP">
+            <input type="text" class="form-control me-2" name="comment" placeholder="Bình luận gì đó...">
             <button type="submit" class="btn btn-dark">Đăng</button>
         </form>
 
         <div class="mt-3">
-            <div class="my-2">
-                <p class="fw-bold mb-0">Minh Hoàng</p>
-                <div class="comment-frame">
-                    <p class="my-0">Quá ư là hoàn hảo luôn !!!</p>
-                </div>
-            </div>
-            <div class="my-2">
-                <p class="fw-bold mb-0">Minh Quân</p>
-                <div class="comment-frame">
-                    <p class="my-0">Rất xứng đáng với giá tiền.</p>
-                </div>
-            </div>
-            <div class="my-2">
-                <p class="fw-bold mb-0">Phan Phúc</p>
-                <div class="comment-frame">
-                    <p class="my-0">Giao hàng hơi lâu, còn chất lượng thì ok.</p>
-                </div>
-            </div>
-            <div class="my-2">
-                <p class="fw-bold mb-0">Hoàng Quân</p>
-                <div class="comment-frame">
-                    <p class="my-0">Không có gì để chê, quá ngon trong tầm giá.</p>
-                </div>
-            </div>
+            @if (ViewBag.binhLuan.Count == 0)
+            {
+                <p class="text-center">Chưa có bình luận nào !!!</p>
+            }
+            else
+            {
+                foreach (var item in ViewBag.binhLuan)
+                {
+
+                    <div class="my-3">
+                        <p class="fw-bold mb-0">@item.KHACHHANG.HO @item.KHACHHANG.TENDEM @item.KHACHHANG.TEN</p>
+                        <p class="fs-7 mb-1">@item.THOIGIANBL</p>
+                        <div class="comment-frame">
+                            <p class="my-0">@item.NOIDUNGBL</p>
+                        </div>
+                    </div>
+
+
+                }
+            }
+
+
         </div>
+
     </div>
+ </div>

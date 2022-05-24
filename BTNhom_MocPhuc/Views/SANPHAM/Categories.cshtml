@@ -68,13 +68,13 @@
                     <div class="col-3 ">
                         <div class="card w-100 product-item" style="width: 18rem;">
                             <a href="/SANPHAM/Details/@item.MASP">
-                                <img src="@item.IMG" class="card-img-top" alt="@item.TENSP">
+                                <img src="/Images/@item.IMG" class="card-img-top" style="height: 250px" alt="@item.TENSP">
                             </a>
                             <div class="card-body">
                                 <a href="/SANPHAM/Details/@item.MASP" class="text-decoration-none text-dark">
                                     <h5 class="card-title fs-6">@item.TENSP</h5>
                                 </a>
-                                <p class="card-text text-danger">@item.GIABAN vnđ</p>
+                                <p class="card-text text-danger">@item.GIABAN.Value.ToString("N0") vnđ</p>
 
                             </div>
                         </div>

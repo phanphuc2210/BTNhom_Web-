@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -14,6 +15,17 @@ namespace BTNhom_MocPhuc.Controllers
     {
         private MocPhucEntities db = new MocPhucEntities();
 
+        [HttpGet]
+        public ActionResult TimKiem(string timKiem = "")
+        {
+            ViewBag.timKiem = timKiem;
+
+            var sanPhams = db.SANPHAMs.SqlQuery("SELECT * FROM SANPHAM WHERE TENSP LIKE N'%" + timKiem + "%'");
+            
+
+            return View(sanPhams.ToList());
+        }
+             
         // GET: SANPHAM/Home
         public ActionResult Home()
         {
@@ -35,15 +47,10 @@ namespace BTNhom_MocPhuc.Controllers
         // GET: SANPHAM/Categories/Ban
         public ActionResult Categories(string id)
         {
-
-
             var sANPHAMs = db.SANPHAMs.SqlQuery("EXEC SP_LAYDANHMUC_SPHAM " + id);
-
-
-
             var tenLSP = db.LOAISPs.FirstOrDefault(s => s.MALSP == id);
 
-            if (tenLSP.TENLSP == null)
+            if (tenLSP == null)
             {
                 ViewBag.tenLSP = "Tất cả sản phẩm";
             }
@@ -60,7 +67,11 @@ namespace BTNhom_MocPhuc.Controllers
             return View(sANPHAMs.ToList());
         }
 
-        // GET: SANPHAM/Details/5
+        
+
+        
+
+        // GET: SANPHAM/Details/SP001
         public ActionResult Details(string id)
         {
             if (id == null)
@@ -68,6 +79,11 @@ namespace BTNhom_MocPhuc.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             SANPHAM sANPHAM = db.SANPHAMs.Find(id);
+
+            var bINHLUANs = db.BINHLUANs.Include(b => b.KHACHHANG).Include(b => b.SANPHAM).Where(s => s.MASP == id).OrderByDescending(s => s.THOIGIANBL);
+            ViewBag.binhLuan = bINHLUANs.ToList();
+
+
             if (sANPHAM == null)
             {
                 return HttpNotFound();

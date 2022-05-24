@@ -1,0 +1,49 @@
+﻿@model List<BTNhom_MocPhuc.Models.CartItem>
+
+@{
+    try
+    {
+        ViewBag.ten = Session["TEN"].ToString();
+        ViewBag.avatar = Session["AVATAR"].ToString();
+        ViewBag.maKH = Session["MAKH"].ToString();
+
+
+    }
+    catch
+    {
+
+    }
+}
+
+<div class="container-fluid bg-dark">
+    <div class="container d-flex  py-2">
+        <p class="text-white-50 me-auto m-0">Have a good day!</p>
+        @if (ViewBag.maKH != null)
+        {
+            <div class="me-3 d-flex">
+                <img src="/Images/@ViewBag.avatar" alt="@ViewBag.ten" style="width: 25px; height: 25px; border-radius: 25px" />
+                <div class="dropdown ms-1">
+                    <a class="dropdown-toggle text-decoration-none text-white-50" href="#" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
+                        Chào @ViewBag.ten !
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownUser">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/KHACHHANG/DangXuat">Đăng xuất</a></li>
+                    </ul>
+                </div>
+
+            </div>
+        }
+        else
+        {
+            <div class="me-3">
+                <a href="/KHACHHANG/DangKy" class="text-decoration-none text-white-50 me-2 hover-white">Đăng ký</a>
+                <a href="/KHACHHANG/DangNhap" class="text-decoration-none text-white-50 hover-white">Đăng nhập</a>
+            </div>
+        }
+
+        <a href="/Cart/Index" class="text-decoration-none text-white"><i class="bi bi-cart"></i>(@Model.Count)</a>
+    </div>
+</div>

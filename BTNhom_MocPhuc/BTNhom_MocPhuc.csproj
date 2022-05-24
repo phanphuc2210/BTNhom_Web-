@@ -129,6 +129,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KHACHHANGController.cs" />
     <Compile Include="Controllers\SANPHAMController.cs" />
@@ -139,6 +140,7 @@
     <Compile Include="Models\BINHLUAN.cs">
       <DependentUpon>MocPhuc.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CartItem.cs" />
     <Compile Include="Models\CTHD.cs">
       <DependentUpon>MocPhuc.tt</DependentUpon>
     </Compile>
@@ -218,6 +220,7 @@
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-3.6.0.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -245,8 +248,8 @@
     <Content Include="Views\Shared\LayoutAdmin.cshtml" />
     <Content Include="Views\Site\GioiThieu.cshtml" />
     <Content Include="Views\Site\LienHe.cshtml" />
-    <Content Include="Views\Site\DangKy.cshtml" />
-    <Content Include="Views\Site\DangNhap.cshtml" />
+    <Content Include="Views\KHACHHANG\DangKy.cshtml" />
+    <Content Include="Views\KHACHHANG\DangNhap.cshtml" />
     <Content Include="Views\Site\GioHang.cshtml" />
     <Content Include="Views\SANPHAM\Home.cshtml" />
     <Content Include="Views\SANPHAM\Categories.cshtml" />
@@ -255,6 +258,11 @@
     <Content Include="Views\KHACHHANG\Details.cshtml" />
     <Content Include="Views\KHACHHANG\Edit.cshtml" />
     <Content Include="Views\KHACHHANG\Index.cshtml" />
+    <Content Include="Views\SANPHAM\TimKiem.cshtml" />
+    <Content Include="Views\Cart\Index.cshtml" />
+    <Content Include="Views\Shared\headerCart.cshtml" />
+    <Content Include="Views\Cart\Payment.cshtml" />
+    <Content Include="Views\Cart\Success.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

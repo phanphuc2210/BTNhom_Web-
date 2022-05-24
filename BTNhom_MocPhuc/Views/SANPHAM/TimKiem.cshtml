@@ -1,0 +1,73 @@
+﻿@model IEnumerable<BTNhom_MocPhuc.Models.SANPHAM>
+
+@{
+    ViewBag.Title = "TimKiem";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+
+<div class="banner-page">
+    <h1 class="text-light fst-italic">Tìm kiếm</h1>
+</div>
+
+<div class="breadcrumb py-3">
+    <div class="container">
+        <a href="/">Trang chủ &nbsp;</a>
+
+
+
+        <span class="text-origin">
+            Tìm kiếm
+        </span>
+
+    </div>
+</div>
+
+
+<div class="container">
+   <h3>Kết quả tìm kiếm cho: <span class="fst-italic">@ViewBag.timKiem</span></h3>
+   <div class="mt-4">
+       <hr class="mt-2" />
+       @if (Model.Count() > 0)
+       {
+
+
+           <div class="sanpham">
+               <div class="row mt-3 gy-3">
+                   @foreach (var item in Model)
+                   {
+                       <div class="col-3 ">
+                           <div class="card w-100 product-item" style="width: 18rem;">
+                               <a href="/SANPHAM/Details/@item.MASP">
+                                   <img src="/Images/@item.IMG" class="card-img-top" style="height: 250px" alt="@item.TENSP">
+                               </a>
+                               <div class="card-body">
+                                   <a href="/SANPHAM/Details/@item.MASP" class="text-decoration-none text-dark">
+                                       <h5 class="card-title fs-6">@item.TENSP</h5>
+                                   </a>
+                                   <p class="card-text text-danger">@item.GIABAN.Value.ToString("N0") vnđ</p>
+
+                               </div>
+                           </div>
+                       </div>
+                   }
+               </div>
+
+               <ul class="page">
+                   <li class="page-item"><a class="page-btn btn-prev"><</a></li>
+                   <li class="page-item"><a class="page-number">1</a></li>
+                   <li class="page-item"><a class="page-number">2</a></li>
+                   <li class="page-item"><a class="page-number">3</a></li>
+                   <li class="page-item"><a class="page-number">4</a></li>
+                   <li class="page-item"><a class="page-number">5</a></li>
+                   <li class="page-item"><a class="page-number">6</a></li>
+                   <li class="page-item "><a class="page-btn btn-next">></a></li>
+               </ul>
+           </div>
+       }
+       else
+       {
+           <p class="text-center">Không có thông tin sản phẩm muốn tìm kiếm. <a href="/">Về trang chủ</a></p>
+       }
+   </div>
+</div>
+
