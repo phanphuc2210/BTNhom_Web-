@@ -11,7 +11,10 @@ namespace BTNhom_MocPhuc.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+
     public partial class KHACHHANG
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -20,17 +23,36 @@ namespace BTNhom_MocPhuc.Models
             this.BINHLUANs = new HashSet<BINHLUAN>();
             this.HOADONs = new HashSet<HOADON>();
         }
-    
+
         public string MAKH { get; set; }
+        [Required(ErrorMessage = "Không ???c ?? tr?ng !!!")]
+        [Display(Name = "Tên")]
         public string TEN { get; set; }
+        [Display(Name = "Tên ??m")]
         public string TENDEM { get; set; }
+        [Required(ErrorMessage = "Không ???c ?? tr?ng !!!")]
+        [Display(Name = "H?")]
         public string HO { get; set; }
+        [Required(ErrorMessage = "Không ???c ?? tr?ng !!!")]
+        [Display(Name = "??a ch?")]
         public string DIACHI { get; set; }
+        [Required(ErrorMessage = "Không ???c ?? tr?ng !!!")]
         public string SDT { get; set; }
         public string AVATAR { get; set; }
+        [Required(ErrorMessage = "Không ???c ?? tr?ng !!!")]
+        [EmailAddress]
+        [Display(Name = "Email")]
         public string EMAIL { get; set; }
+        [Required(ErrorMessage = "Không ???c ?? tr?ng !!!")]
+        [Display(Name = "M?t kh?u")]
         public string PASS { get; set; }
-    
+
+        [NotMapped]
+        [Required(ErrorMessage = "Không ???c ?? tr?ng !!!")]
+        [System.ComponentModel.DataAnnotations.Compare("PASS", ErrorMessage = "M?t kh?u không kh?p !!!")]
+        [Display(Name = "Xác nh?n m?t kh?u")]
+        public string ConfirmPassword { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BINHLUAN> BINHLUANs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
