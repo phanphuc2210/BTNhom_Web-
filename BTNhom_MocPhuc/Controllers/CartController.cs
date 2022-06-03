@@ -1,6 +1,7 @@
 ﻿using BTNhom_MocPhuc.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -16,7 +17,8 @@ namespace BTNhom_MocPhuc.Controllers
         public int InsertHoaDon(HOADON hoaDon)
         {
             db.HOADONs.Add(hoaDon);
-            db.SaveChanges();
+
+            
             return hoaDon.IDHD;
         }
 
@@ -135,8 +137,13 @@ namespace BTNhom_MocPhuc.Controllers
                 if (cart != null)
                 {
                     list = (List<CartItem>)cart;
-
                 }
+
+                var khachHang = db.KHACHHANGs.Find(Session["MAKH"].ToString());
+                ViewBag.KHACHHANG = khachHang;
+
+                var ptThanhToan = db.PHUONGTHUCTTs.SqlQuery("SELECT * FROM PHUONGTHUCTT");
+                ViewBag.ptThanhToan = ptThanhToan.ToList();
 
                 return View(list);
             }
@@ -148,16 +155,17 @@ namespace BTNhom_MocPhuc.Controllers
         }
 
         [HttpPost]
-        public ActionResult Payment(string NOIGIAOHANG)
+        public ActionResult Payment(string NOIGIAOHANG, string ptThanhToan)
         {
 
 
             var hoaDon = new HOADON();
             hoaDon.MAKH = Session["MAKH"].ToString();
             hoaDon.NGAYDATHANG = DateTime.Today;
+            hoaDon.NGAYGIAOHANG = DateTime.Today.AddDays(5);
             hoaDon.NOIGIAOHANG = NOIGIAOHANG;
-            hoaDon.MAPT = "PT1";
-            hoaDon.TINHTRANG = "TT2";
+            hoaDon.MAPT = ptThanhToan;
+            hoaDon.TINHTRANG = "TT1";
 
             try
             {
@@ -171,14 +179,21 @@ namespace BTNhom_MocPhuc.Controllers
                     cthd.DONGIA = (int)item.sanPham.GIABAN * item.soLuong;
                     cthd.SOLUONG = item.soLuong;
                     InsertCTHD(cthd);
-                    
-                 }
+
+
+                    SANPHAM sANPHAM = db.SANPHAMs.Find(item.sanPham.MASP);
+                    sANPHAM.SOLUONGTON -= item.soLuong;
+                    db.Entry(sANPHAM).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
                 
             }
             catch (Exception ex)
             {
                 throw;
             }
+
+            
 
             Session[CartSession] = null;
             return Redirect("/Cart/Success");

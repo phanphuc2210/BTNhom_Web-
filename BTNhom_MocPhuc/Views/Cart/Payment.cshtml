@@ -32,6 +32,7 @@
         <tbody>
             @if (Model.Count > 0)
             {
+                int sumMoney = 0;
                 foreach (var item in Model)
                 {
                     <tr>
@@ -50,6 +51,8 @@
                         <td class="text-center">@((item.sanPham.GIABAN * item.soLuong).Value.ToString("N0")) vnđ</td>
                         
                     </tr>
+                    sumMoney += ((int)item.sanPham.GIABAN * item.soLuong);
+                    ViewBag.sumMoney = sumMoney;
                 }
             }
             
@@ -57,20 +60,41 @@
         </tbody>
     </table>
 
-    <div>
-        @using (Html.BeginForm("Payment", "Cart", FormMethod.Post))
-        {
-            <div class="form-group mb-3 mt-2 w-75">
-                <label for="NOIGIAOHANG" class="form-label">Nơi nhận hàng </label>
-                <input type="text" class="form-control" name="NOIGIAOHANG"/>
+    
+    
+    @using (Html.BeginForm("Payment", "Cart", FormMethod.Post, new {@class="mt-5"}))
+    {
+        <div class="row">
+            
+            <div class="form-group col-6">
+                <p><span class="fw-bold">Tên khách hàng:</span> @ViewBag.KHACHHANG.HO @ViewBag.KHACHHANG.TENDEM @ViewBag.KHACHHANG.TEN</p>
+                <p><span class="fw-bold">SĐT:</span> @ViewBag.KHACHHANG.SDT</p>
+                <label for="NOIGIAOHANG" class="form-label fw-bold">Nơi nhận hàng </label>
+                <input type="text" class="form-control" name="NOIGIAOHANG" value="@ViewBag.KHACHHANG.DIACHI" />
             </div>
 
-            <div class="d-flex flex-column mt-5">
-                <div class="ms-auto mb-3 fs-5"><span class="fw-bold me-3 text-origin">Tổng tiền thanh toán</span><span>2.000.000 vnd</span></div>
-                <button type="submit" class="btn btn-dark ms-auto">Xác nhận đơn hàng</button>
+            <div class="col-6">
+                <p class="mb-0 fw-bold">Phương thức thanh toán:</p>
+
+                @foreach (var item in ViewBag.ptThanhToan)
+                {
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="ptThanhToan" id="flexRadioDefault1" value="@item.MAPT" checked>
+                        <label class="form-check-label" for="ptThanhToan">
+                            @item.TENPT
+                        </label>
+                    </div>
+                }
             </div>
-        }
-    </div>
+        </div>
+        
+
+        <div class="d-flex flex-column mt-5">
+            <div class="ms-auto mb-3 fs-5"><span class="fw-bold me-3 text-origin">Tổng tiền thanh toán</span><span>@ViewBag.sumMoney.ToString("N0") vnđ</span></div>
+            <button type="submit" class="btn btn-dark ms-auto">Xác nhận đơn hàng</button>
+        </div>
+    }
+   
 
 
    

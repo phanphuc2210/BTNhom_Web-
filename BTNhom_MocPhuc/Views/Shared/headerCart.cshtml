@@ -7,7 +7,6 @@
         ViewBag.avatar = Session["AVATAR"].ToString();
         ViewBag.maKH = Session["MAKH"].ToString();
 
-
     }
     catch
     {
@@ -27,8 +26,8 @@
                         Chào @ViewBag.ten !
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownUser">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><a class="dropdown-item" href="/KHACHHANG/Edit/@ViewBag.maKH">Tài khoản của tôi</a></li>
+                        <li><a class="dropdown-item" href="/KHACHHANG/MyOrder/@ViewBag.maKH">Đơn hàng của tôi</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="/KHACHHANG/DangXuat">Đăng xuất</a></li>
                     </ul>

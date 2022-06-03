@@ -15,6 +15,23 @@ namespace BTNhom_MocPhuc.Controllers
     {
         private MocPhucEntities db = new MocPhucEntities();
 
+        string LayMaSP()
+        {
+            var maMax = db.SANPHAMs.ToList().Select(n => n.MASP).Max();
+            int maSP;
+            if (maMax == null)
+            {
+                maSP = 1;
+            }
+            else
+            {
+                maSP = int.Parse(maMax.Substring(2)) + 1;
+            }
+
+            string SP = String.Concat("00", maSP.ToString());
+            return "SP" + SP.Substring(maSP.ToString().Length - 1);
+        }
+
         [HttpGet]
         public ActionResult TimKiem(string timKiem = "")
         {
@@ -25,7 +42,27 @@ namespace BTNhom_MocPhuc.Controllers
 
             return View(sanPhams.ToList());
         }
-             
+
+        [HttpGet]
+        public ActionResult TimKiemNC(string MASP = "", string TENSP = "", string MALSP = "")
+        {
+            if(Session["MANV"] != null)
+            {
+                ViewBag.MASP = MASP;
+                ViewBag.TENSP = TENSP;
+                ViewBag.MALSP = new SelectList(db.LOAISPs, "MALSP", "TENLSP");
+                var sp = db.SANPHAMs.SqlQuery("SanPham_TimKiem'" + MASP + "',N'" + TENSP + "','" + MALSP + "'");
+                if (sp.Count() == 0)
+                    ViewBag.TB = "Không có thông tin tìm kiếm.";
+                return View(sp.ToList());
+            }
+           
+            else
+            {
+                return Redirect("/QuanTri/DangNhap");
+            }
+        }
+
         // GET: SANPHAM/Home
         public ActionResult Home()
         {
@@ -33,15 +70,23 @@ namespace BTNhom_MocPhuc.Controllers
             var sANPHAM2 = db.SANPHAMs.SqlQuery("SELECT TOP(4) * FROM SANPHAM");
 
             ViewBag.SPMoi = sANPHAM1.ToList();
-            ViewBag.SPBanChay = sANPHAM2.ToList();
+            ViewBag.SPGoiY = sANPHAM2.ToList();
             return View();
         }
 
         // GET: SANPHAM
         public ActionResult Index()
         {
-            var sANPHAMs = db.SANPHAMs.Include(s => s.LOAISP);
-            return View(sANPHAMs.ToList());
+            if(Session["MANV"] != null)
+            {
+                var sANPHAMs = db.SANPHAMs.Include(s => s.LOAISP);
+                return View(sANPHAMs.ToList());
+            }
+            else
+            {
+                return Redirect("/QuanTri/DangNhap");
+            }
+
         }
 
         // GET: SANPHAM/Categories/Ban
@@ -67,9 +112,23 @@ namespace BTNhom_MocPhuc.Controllers
             return View(sANPHAMs.ToList());
         }
 
-        
 
-        
+        // GET: SANPHAM/Comments/SP001
+        public ActionResult Comments(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var bINHLUANs = db.BINHLUANs.Include(b => b.KHACHHANG).Where(s => s.MASP == id).OrderByDescending(s => s.THOIGIANBL);
+            ViewBag.binhLuan = bINHLUANs.ToList();
+            ViewBag.TENSP = db.SANPHAMs.FirstOrDefault(x => x.MASP == id).TENSP;
+
+            
+            return View();
+        }
+
 
         // GET: SANPHAM/Details/SP001
         public ActionResult Details(string id)
@@ -79,6 +138,9 @@ namespace BTNhom_MocPhuc.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             SANPHAM sANPHAM = db.SANPHAMs.Find(id);
+
+            var spTuongTu = db.SANPHAMs.SqlQuery("SELECT TOP(4) * FROM SANPHAM WHERE MALSP = '" + sANPHAM.MALSP + "' AND MASP != '" + id + "'");
+            ViewBag.spTT = spTuongTu.ToList();
 
             var bINHLUANs = db.BINHLUANs.Include(b => b.KHACHHANG).Include(b => b.SANPHAM).Where(s => s.MASP == id).OrderByDescending(s => s.THOIGIANBL);
             ViewBag.binhLuan = bINHLUANs.ToList();
@@ -105,8 +167,19 @@ namespace BTNhom_MocPhuc.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "MASP,MALSP,TENSP,SOLUONGTON,IMG,MOTA,GIABAN,NGAYTHEM")] SANPHAM sANPHAM)
         {
+            //System.Web.HttpPostedFileBase Avatar;
+            var imgSP = Request.Files["Avatar"];
+            //Lấy thông tin từ input type=file có tên Avatar
+            string postedFileName = System.IO.Path.GetFileName(imgSP.FileName);
+            //Lưu hình đại diện về Server
+            var path = Server.MapPath("/Images/" + postedFileName);
+            imgSP.SaveAs(path);
+
             if (ModelState.IsValid)
             {
+                sANPHAM.MASP = LayMaSP();
+                sANPHAM.IMG = postedFileName;
+                sANPHAM.NGAYTHEM = DateTime.Today;  
                 db.SANPHAMs.Add(sANPHAM);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -139,49 +212,27 @@ namespace BTNhom_MocPhuc.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "MASP,MALSP,TENSP,SOLUONGTON,IMG,MOTA,GIABAN,NGAYTHEM")] SANPHAM sANPHAM)
         {
+            var imgSP = Request.Files["Avatar"];
+            try
+            {
+                //Lấy thông tin từ input type=file có tên Avatar
+                string postedFileName = System.IO.Path.GetFileName(imgSP.FileName);
+                //Lưu hình đại diện về Server
+                var path = Server.MapPath("/Images/" + postedFileName);
+                imgSP.SaveAs(path);
+            }
+            catch { }
+
             if (ModelState.IsValid)
             {
                 db.Entry(sANPHAM).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                
             }
             ViewBag.MALSP = new SelectList(db.LOAISPs, "MALSP", "TENLSP", sANPHAM.MALSP);
             return View(sANPHAM);
         }
 
-        // GET: SANPHAM/Delete/5
-        public ActionResult Delete(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            SANPHAM sANPHAM = db.SANPHAMs.Find(id);
-            if (sANPHAM == null)
-            {
-                return HttpNotFound();
-            }
-            return View(sANPHAM);
-        }
-
-        // POST: SANPHAM/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
-        {
-            SANPHAM sANPHAM = db.SANPHAMs.Find(id);
-            db.SANPHAMs.Remove(sANPHAM);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        
     }
 }

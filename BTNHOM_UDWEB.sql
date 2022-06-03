@@ -88,8 +88,8 @@ CREATE TABLE CTHD (
 
 
 INSERT INTO NHANVIEN(MANV,TEN,TENDEM,HO,NGAYSINH,DIACHI,SDT,AVATAR,EMAIL,TENDN,PASS,IsAdmin) VALUES
-('NV001',N'Phúc',N'Trần Hữu',N'Phan','10/22/2001',N'56KA Cù Lao Thượng, Nha Trang','0708488401','employee.png','phucpth2001@gmail.com','nv001','22102001',1),
-('NV002',N'Tùng',N'Thanh',N'Nguyễn','7/5/1994',N'53KB Cù Lao Trung, Nha Trang','0120737421','employee.png','tungnt1994@gmail.com','nv002','05071994',0)
+('NV001',N'Phúc',N'Trần Hữu',N'Phan','10/22/2001',N'56KA Cù Lao Thượng, Nha Trang','0708488401','employee.png','phucpth2001@gmail.com','nv001','25d55ad283aa400af464c76d713c07ad',1),
+('NV002',N'Tùng',N'Thanh',N'Nguyễn','7/5/1994',N'53KB Cù Lao Trung, Nha Trang','0120737421','employee.png','tungnt1994@gmail.com','nv002','25d55ad283aa400af464c76d713c07ad',0)
 
 INSERT INTO LOAISP VALUES
 ('BA',N'Bàn'),
@@ -123,11 +123,13 @@ INSERT INTO SANPHAM(MASP,MALSP,TENSP,SOLUONGTON,IMG,MOTA,GIABAN, NGAYTHEM) VALUE
 
 
 INSERT INTO TINHTRANG(MATINHTRANG,TENTINHTRANG) VALUES
-('TT1', N'Giỏ hàng'),
-('TT2', N'Đã đặt hàng'),
-('TT3', N'Đã duyệt đơn'),
-('TT4', N'Đang giao hàng'),
-('TT5', N'Đã giao hàng')
+('TT1', N'Đã đặt hàng'),
+('TT2', N'Đã duyệt đơn'),
+('TT3', N'Đang giao hàng'),
+('TT4', N'Đã giao hàng')
+
+
+
 
 INSERT INTO PHUONGTHUCTT(MAPT, TENPT) VALUES
 ('PT1', N'	Thanh toán khi giao hàng (COD)')
@@ -145,6 +147,83 @@ END
 
 ------------------------------------------------------------------------------
 
+ALTER PROCEDURE SanPham_TimKiem
+    @MASP varchar(10)=NULL,
+	@TENSP nvarchar(40)=NULL,
+	@MALSP varchar(10)=NULL
+AS
+BEGIN
+DECLARE @SqlStr NVARCHAR(4000),
+		@ParamList nvarchar(2000)
+SELECT @SqlStr = '
+       SELECT * 
+       FROM SANPHAM
+       WHERE  (1=1)
+       '
+IF @MASP IS NOT NULL
+       SELECT @SqlStr = @SqlStr + '
+              AND (MASP LIKE ''%'+@MASP+'%'')
+              '
+IF @TENSP IS NOT NULL
+       SELECT @SqlStr = @SqlStr + '
+              AND (TENSP LIKE N''%' + @TENSP + '%''' + ')
+              '
+		
+IF @MALSP IS NOT NULL
+       SELECT @SqlStr = @SqlStr + '
+              AND (MALSP LIKE ''%'+@MALSP+'%'')'
+
+	EXEC SP_EXECUTESQL @SqlStr
+END
+
+-------------------------------------------------------------------------
+ALTER PROCEDURE HoaDon_TimKiem
+    @MAHD varchar(10)=NULL,
+	@MANVDUYET varchar(10)=NULL,
+	@MANVGIAO varchar(10)=NULL,
+	@MAPT varchar(10)=NULL,
+	@MATT varchar(10)=NULL
+AS
+BEGIN
+DECLARE @SqlStr NVARCHAR(4000),
+		@ParamList nvarchar(2000)
+SELECT @SqlStr = '
+       SELECT * 
+       FROM HOADON
+       WHERE  (1=1)
+       '
+IF @MAHD IS NOT NULL
+       SELECT @SqlStr = @SqlStr + '
+              AND (IDHD LIKE ''%'+@MAHD+'%'')
+              '
+IF @MANVDUYET IS NOT NULL
+       SELECT @SqlStr = @SqlStr + '
+              AND (MANVDUYET LIKE N''%' + @MANVDUYET + '%''' + ')
+              '
+		
+IF @MANVGIAO IS NOT NULL
+       SELECT @SqlStr = @SqlStr + '
+              AND (MANVGIAO LIKE ''%'+@MANVGIAO+'%'')'
+
+IF @MAPT IS NOT NULL
+       SELECT @SqlStr = @SqlStr + '
+              AND (MAPT LIKE ''%'+@MAPT+'%'')'
+
+IF @MATT IS NOT NULL
+       SELECT @SqlStr = @SqlStr + '
+              AND (TINHTRANG LIKE ''%'+@MATT+'%'')'
+	EXEC SP_EXECUTESQL @SqlStr
+END
+
+EXEC HoaDon_TimKiem 10,NULL,NULL,NULL,NULL
+
+
+EXEC SanPham_TimKiem NULL, N'Bàn ăn'
+----------------------------------------------------------------------------------------------
+
+
+
+---- Test chơi nè ------------
 SELECT TOP(4) * FROM SANPHAM ORDER BY NGAYTHEM DESC
 
 
@@ -157,13 +236,12 @@ EXEC SP_LAYDANHMUC_SPHAM 'GH'
 
 SELECT * FROM SANPHAM WHERE TENSP LIKE N'%Tủ%'
 
+SELECT * FROM SANPHAM
 
 
 
+SELECT * FROM HOADON WHERE NGAYDATHANG > '05/20/2022' AND NGAYDATHANG < '06/05/2022'
 
 
 
-
-
-
-
+SELECT TOP(4) * FROM SANPHAM WHERE MALSP = 'BA' AND MASP != 'SP001'

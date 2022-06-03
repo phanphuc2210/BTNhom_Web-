@@ -1,0 +1,80 @@
+﻿@{
+    try
+    {
+        ViewBag.Ten = Session["TENNV"].ToString();
+        ViewBag.Avatar = Session["AVATARNV"].ToString();
+        ViewBag.maNV = Session["MANV"].ToString();
+    }
+    catch
+    {
+
+    }
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <script src="~/Scripts/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="~/Content/styleAdmin.css" />
+</head>
+<body>
+    <nav class="navbar  navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand fs-2 fw-bolder text-origin" href="/QuanTri/Index">MộcPhúc.</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+                @if (ViewBag.Ten != null)
+                {
+                    <div class="ms-auto me-3 d-flex">
+                        <img src="/Images/@ViewBag.Avatar" alt="@ViewBag.Ten" style="width: 25px; height: 25px; border-radius: 25px" />
+                        <div class="dropdown ms-1">
+                            <a class="dropdown-toggle text-decoration-none text-white-50" style="background-color:none;" href="#" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
+                                Chào @ViewBag.Ten !
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownUser">
+                                <li><a class="dropdown-item" href="/NHANVIEN/Edit/@ViewBag.maNV">Tài khoản của tôi</a></li>
+
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="/QuanTri/DangXuat">Đăng xuất</a></li>
+                            </ul>
+                        </div>
+
+                    </div>
+                }
+                else
+                {
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0 fs-nav fw-bold">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="/QuanTri/DangNhap">Đăng nhập</a>
+                        </li>
+                    </ul>
+                }
+
+
+
+            </div>
+        </div>
+    </nav>
+
+    <!--//////////////////////////////////////////////////////////////////-->
+    <div class="container-fluid body-content p-0">
+        @RenderBody()
+
+
+    </div>
+
+    <!--//////////////////////////////////////////////////////////////////-->
+    <div class="container-fluid py-3">
+        <p class="text-dark my-0">&copy; @DateTime.Now.Year - MộcPhúc. - Nha Trang</p>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</body>
+</html>

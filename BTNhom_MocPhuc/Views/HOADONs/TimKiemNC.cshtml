@@ -1,0 +1,127 @@
+﻿@model IEnumerable<BTNhom_MocPhuc.Models.HOADON>
+
+@{
+    ViewBag.Title = "TimKiemNC";
+    Layout = "~/Views/Shared/LayoutQuanTri.cshtml";
+    var grid = new WebGrid(Model, canPage: true, defaultSort: "TENSP", rowsPerPage: 10);
+    @Scripts.Render("~/Scripts/jquery-1.6.2.min.js")
+}
+
+<style type="text/css">
+    .grid-footer {
+        color: #000;
+        font: 17px Calibri;
+        text-align: center;
+        font-weight: bold;
+    }
+
+        .grid-footer a {
+            background-color: #ffffff;
+            color: blue;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            padding: 1px 10px 2px 10px;
+        }
+
+            .grid-footer a:active, a:hover {
+                background-color: #ffffff;
+                color: #FFAD33;
+                box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            }
+
+    .alternatingRowStyle {
+        background-color: aliceblue;
+    }
+
+    table .table1 {
+        text-align: left;
+        margin-left: 0px;
+        margin-right: 0px;
+        width: 800px;
+    }
+
+    .tr, .td {
+        text-align: left;
+    }
+
+    a {
+        text-decoration: none;
+        color: #000;
+    }
+</style>
+
+<div class="container">
+    <div class="mt-5">
+        <a href="/HOADONs/Index" class="text-primary">Quay lại</a>
+        <h3>Tìm kiếm hóa đơn</h3>
+        @using (Html.BeginForm("TimKiemNC", "HOADONs", FormMethod.Get))
+        {
+            @Html.AntiForgeryToken()
+
+    <div class="d-flex flex-column">
+
+        <div class="w-75 mx-auto d-flex flex-row justify-content-evenly">
+            <div class="form-group mb-1 mt-2 my-2">
+                <label for="MAHD" class="form-label">Mã hóa đơn</label>
+                <input type="text" class="form-control" name="MAHD" value="@ViewBag.MAHD" />
+            </div>
+            <div class="form-group mb-1 mt-2">
+                <label for="MANVDUYET" class="form-label">Mã nhân viên duyệt</label>
+                <input type="text" class="form-control" name="MANVDUYET" value="@ViewBag.MANVDUYET" />
+            </div>
+            <div class="form-group mb-1 mt-2">
+                <label for="MANVGIAO" class="form-label">Mã nhân viên giao</label>
+                <input type="text" class="form-control" name="MANVGIAO" value="@ViewBag.MANVGIAO" />
+            </div>
+        </div>
+
+       
+
+        <div class="w-75 mx-auto d-flex flex-row justify-content-evenly">
+
+            <div class="form-group mb-1 mt-2 my-2">
+                <label for="MAPT" class="form-label">Phương thức thanh toán</label>
+                @Html.DropDownList("MAPT", null, "Tất cả", htmlAttributes: new { @class = "form-control" })
+            </div>
+
+            <div class="form-group mb-1 mt-2 my-2">
+                <label for="MATT" class="form-label">Tình trạng</label>
+                @Html.DropDownList("MATT", null, "Tất cả", htmlAttributes: new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="mx-auto mt-3">
+            <button type="submit" class="btn btn-dark">Tìm kiếm</button>
+            <a role="button" href="/HOADONs/TimKiemNC" class="btn btn-dark">Nhập mới</a>
+        </div>
+    </div>
+
+        }
+    </div>
+
+    <div class="gridContent">
+        <p class="text-center">@ViewBag.TB</p>
+        @grid.GetHtml(
+        tableStyle: "table table-bordered table-hover",
+        footerStyle: "grid-footer",
+        fillEmptyRows: true,
+        mode: WebGridPagerModes.Numeric,
+        alternatingRowStyle: "alternatingRowStyle",
+        columns: new[]  // colums in grid
+            {
+            grid.Column("IDHD","Mã hóa đơn", format: @<text>#@item.IDHD</text>), //the model fields to display
+            grid.Column("NGAYDATHANG","Ngày đặt", format:@<text> @item.NGAYDATHANG.ToString("dd/MM/yyyy")</text>),
+            grid.Column("NGAYGIAOHANG","Ngày giao hàng", format:@<text> @item.NGAYGIAOHANG.ToString("dd/MM/yyyy")</text>),
+            grid.Column("MANVDUYET","Nhân viên duyệt", format: (@item) => item.MANVDUYET == null?"": item.NHANVIEN.HO+" "+item.NHANVIEN.TENDEM+" "+item.NHANVIEN.TEN),
+            grid.Column("MANVGIAO","Nhân viên giao", format: (@item) => item.MANVGIAO == null?"": item.NHANVIEN1.HO+" "+item.NHANVIEN1.TENDEM+" "+item.NHANVIEN1.TEN),
+            grid.Column("TINHTRANG1.TENTINHTRANG","Tình trạng"),
+            grid.Column(format: @<text>
+                <a href="@Url.Action("Details", new { id = item.IDHD})" class="edit-btn text-primary">
+                    Chi tiết
+                </a>
+            </text>),
+
+        }
+    )
+    </div>
+</div>
+

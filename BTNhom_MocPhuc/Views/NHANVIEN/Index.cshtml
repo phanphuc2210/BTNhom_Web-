@@ -1,9 +1,9 @@
-﻿@model IEnumerable<BTNhom_MocPhuc.Models.KHACHHANG>
+﻿@model IEnumerable<BTNhom_MocPhuc.Models.NHANVIEN>
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/LayoutQuanTri.cshtml";
-    var grid = new WebGrid(Model, canPage: true, defaultSort: "TENKH", rowsPerPage: 10);
+    var grid = new WebGrid(Model, canPage: true, defaultSort: "TENNV", rowsPerPage: 10);
 }
 
 <style type="text/css">
@@ -49,7 +49,7 @@
 </style>
 
 <div class="container">
-    <h3 class="my-3">Danh sách khách hàng</h3>
+    <h3 class="my-3">Danh sách nhân viên</h3>
 
     @grid.GetHtml(
     tableStyle: "table table-bordered table-hover",
@@ -60,17 +60,18 @@
     columns: new[]  // colums in grid
         {
             grid.Column("STT",format: item => item.WebGrid.Rows.IndexOf(item) + 1 + Math.Round(Convert.ToDouble(grid.TotalRowCount / grid.PageCount) / grid.RowsPerPage) * grid.RowsPerPage * grid.PageIndex),
-            grid.Column("MAKH","Mã khách hàng"), //the model fields to display
-            grid.Column("AVATAR","Ảnh đại diện", format: @<text><img src="/Images/@item.AVATAR" alt="@item.TEN" width="50" height="50" /></text>),
+            grid.Column("MANV","Mã nhân viên"), //the model fields to display
             grid.Column("","Họ tên", format: @<text> @item.HO @item.TENDEM @item.TEN </text>),
+            grid.Column("NGAYSINH","Ngày sinh", format:@<text> @item.NGAYSINH.ToString("dd/MM/yyyy")</text>),
             grid.Column("DIACHI","Địa chỉ"),
             grid.Column("SDT","SĐT"),
+            grid.Column("IsAdmin","Là Admim",format: (@item) => @item.IsAdmin==true?"Đúng":"Không"),
             grid.Column(format: @<text>
-                <a href="@Url.Action("Details", new { id = item.MAKH})" class="edit-btn text-primary">
+                <a href="@Url.Action("Details", new { id = item.MANV})" class="edit-btn text-primary">
                     Chi tiết
                 </a>
             </text>),
 
-        }
+            }
     )
 </div>

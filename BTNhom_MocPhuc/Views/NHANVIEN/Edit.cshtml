@@ -1,51 +1,38 @@
-﻿@model BTNhom_MocPhuc.Models.KHACHHANG
+﻿@model BTNhom_MocPhuc.Models.NHANVIEN
 
 @{
     ViewBag.Title = "Edit";
-    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+    Layout = "~/Views/Shared/LayoutQuanTri.cshtml";
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script type="text/javascript">
-    $(function ()
-    {
-        var fileupload = $("#Avatar");
-        var image = $("#FileUpload");
-        image.click(function ()
-        {
-            fileupload.click();
+        $(function () {
+            var fileupload = $("#Avatar");
+            var image = $("#FileUpload");
+            image.click(function () {
+                fileupload.click();
+            });
+            fileupload.change(function () {
+                var fileName = $(this).val().split('\\')[$(this).val().split('\\').length - 1];
+                document.getElementById("AVATAR").value = fileName;
+            });
         });
-        fileupload.change(function ()
-        {
-            var fileName = $(this).val().split('\\')[$(this).val().split('\\').length - 1];
-            document.getElementById("AVATAR").value=fileName;
-        });
-    });
     </script>
 }
 
-<div class="banner-page">
-    <h1 class="text-light fst-italic">Tài khoản của tôi</h1>
-</div>
-
-<div class="breadcrumb py-3">
-    <div class="container">
-        <a href="/">Trang chủ &nbsp;</a>
-        <span class="text-origin">Tài khoản của tôi</span>
-    </div>
-</div>
-
 <div class="container">
-    @using (Html.BeginForm("Edit", "KHACHHANG", FormMethod.Post, new { enctype = "multipart/form-data"}))
+    @using (Html.BeginForm("Edit", "NHANVIEN", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
 
     <div class="form-horizontal w-50 ">
-        <h3>Thông tin cá nhân</h3>
+        <h3 class="mt-4">Thông tin cá nhân</h3>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.MAKH)
-        @Html.HiddenFor(model => model.EMAIL)
+        @Html.HiddenFor(model => model.MANV)
+        @Html.HiddenFor(model => model.TENDN)
         @Html.HiddenFor(model => model.PASS)
+        @Html.HiddenFor(model => model.IsAdmin)
 
         <div class="form-group my-4">
             <div class="">
@@ -79,7 +66,11 @@
             </div>
         </div>
 
-
+        <div class="form-group mb-3">
+            @Html.LabelFor(model => model.NGAYSINH, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.NGAYSINH, new { htmlAttributes = new { @class = "form-control", @disable="disable"} })
+            @Html.ValidationMessageFor(model => model.NGAYSINH, "", new { @class = "text-danger" })
+        </div>
 
         <div class="form-group my-4">
             @Html.LabelFor(model => model.DIACHI, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -97,14 +88,15 @@
             </div>
         </div>
 
-
-
-
-
+        <div class="form-group mb-3">
+            @Html.LabelFor(model => model.EMAIL, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.EditorFor(model => model.EMAIL, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.EMAIL, "", new { @class = "text-danger", @disable = "disable" })
+        </div>
 
 
         <div class="form-group mb-3">
-            <input type="password" name="ConfirmPassword" value="@Model.PASS" hidden="hidden"/>
+            <input type="password" name="ConfirmPassword" value="@Model.PASS" hidden="hidden" />
             @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
         </div>
 
@@ -118,3 +110,4 @@
     </div>
     }
 </div>
+

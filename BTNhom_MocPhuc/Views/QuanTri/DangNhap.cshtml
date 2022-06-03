@@ -1,0 +1,38 @@
+﻿@model BTNhom_MocPhuc.Models.NHANVIEN
+
+@{
+    ViewBag.Title = "DangNhap";
+    Layout = "~/Views/Shared/LayoutQuanTri.cshtml";
+}
+
+
+<div class="container d-flex flex-column align-items-center">
+    <form class="d-flex flex-column w-50 mt-4" method="post" action="/QuanTri/DangNhap">
+        @Html.AntiForgeryToken()
+
+
+        <h3 class="text-center">Đăng nhập tài khoản</h3>
+
+        @if (ViewBag.error != null)
+        {
+            <p class="text-center text-danger fw-bold">@ViewBag.error</p>
+        }
+
+        <div class="mb-3">
+            <label for="TENDN" class="form-label">Tên đăng nhập</label>
+            @Html.EditorFor(model => model.TENDN, new { htmlAttributes = new { @class = "form-control"} })
+            @Html.ValidationMessageFor(model => model.TENDN, "", new { @class = "text-danger" })
+        </div>
+        <div class="mb-3">
+            <label for="PASS" class="form-label">Mật khẩu</label>
+            @Html.EditorFor(model => model.PASS, new { htmlAttributes = new { @class = "form-control", @type = "password" } })
+            @Html.ValidationMessageFor(model => model.PASS, "", new { @class = "text-danger" })
+        </div>
+
+
+        <button class="btn btn-dark mx-auto mt-3" type="submit">ĐĂNG NHẬP</button>
+    </form>
+
+    
+</div>
+

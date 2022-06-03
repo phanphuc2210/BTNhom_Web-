@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using BTNhom_MocPhuc.Models;
 using System.Security.Cryptography;
 using System.Text;
+using System.Data.Entity.Validation;
 
 namespace BTNhom_MocPhuc.Controllers
 {
@@ -52,7 +53,14 @@ namespace BTNhom_MocPhuc.Controllers
         // GET: KHACHHANG
         public ActionResult Index()
         {
-            return View(db.KHACHHANGs.ToList());
+            if(Session["MANV"] != null)
+            {
+                return View(db.KHACHHANGs.ToList());
+            }
+            else
+            {
+                return Redirect("/QuanTri/DangNhap");
+            }
         }
 
         // GET: KHACHHANG/Details/5
@@ -180,6 +188,35 @@ namespace BTNhom_MocPhuc.Controllers
             return RedirectToAction("../");
         }
 
+        // GET: KHACHHANG/MyOrder/5
+        public ActionResult MyOrder(string id)
+        {
+            var orders = db.HOADONs.Where(x => x.MAKH == id).Include(x => x.TINHTRANG1).OrderByDescending(x => x.IDHD).ToList();
+            ViewBag.Count = orders.Count;
+            return View(orders);
+        }
+
+        // GET: KHACHHANG/MyDetailOrder/5
+        public ActionResult MyDetailOrder(string id)
+        {
+            var detailOrders = db.CTHDs.Where(x => x.IDHD.ToString() == id).Include(x => x.SANPHAM).ToList();
+
+
+            ViewBag.IDHD = id;
+
+            var hd = db.HOADONs.FirstOrDefault(x => x.IDHD.ToString() == id);
+
+           
+            ViewBag.TT = db.TINHTRANGs.FirstOrDefault(x => x.MATINHTRANG == hd.TINHTRANG).TENTINHTRANG;
+
+            ViewBag.NgayDat = hd.NGAYDATHANG;
+            ViewBag.KH = db.KHACHHANGs.FirstOrDefault(x => x.MAKH == hd.MAKH);
+
+            ViewBag.ptThanhToan = db.PHUONGTHUCTTs.FirstOrDefault(x => x.MAPT == hd.MAPT).TENPT;
+
+            return View(detailOrders);
+        }
+
         // GET: KHACHHANG/Edit/5
         public ActionResult Edit(string id)
         {
@@ -200,50 +237,39 @@ namespace BTNhom_MocPhuc.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MAKH,TEN,TENDEM,HO,DIACHI,SDT,AVATAR,EMAIL,PASS")] KHACHHANG kHACHHANG)
+        public ActionResult Edit([Bind(Include = "MAKH,TEN,TENDEM,HO,DIACHI,SDT,AVATAR,EMAIL,PASS,ConfirmPassword")] KHACHHANG kHACHHANG)
         {
-            if (ModelState.IsValid)
+            var imgKH = Request.Files["Avatar"];
+            try
+            {
+                //Lấy thông tin từ input type=file có tên Avatar
+                string postedFileName = System.IO.Path.GetFileName(imgKH.FileName);
+                //Lưu hình đại diện về Server
+                var path = Server.MapPath("/Images/" + postedFileName);
+                imgKH.SaveAs(path);
+            }
+            catch { }
+            
+            try
             {
                 db.Entry(kHACHHANG).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
             }
+            catch (DbEntityValidationException dbEx)
+            {
+                foreach (var validationErrors in dbEx.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        System.Console.WriteLine("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
+                    }
+                }
+            }
+            
             return View(kHACHHANG);
         }
 
-        // GET: KHACHHANG/Delete/5
-        public ActionResult Delete(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            KHACHHANG kHACHHANG = db.KHACHHANGs.Find(id);
-            if (kHACHHANG == null)
-            {
-                return HttpNotFound();
-            }
-            return View(kHACHHANG);
-        }
+      
 
-        // POST: KHACHHANG/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
-        {
-            KHACHHANG kHACHHANG = db.KHACHHANGs.Find(id);
-            db.KHACHHANGs.Remove(kHACHHANG);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
     }
 }

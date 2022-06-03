@@ -1,12 +1,13 @@
-﻿@model BTNhom_MocPhuc.Models.KHACHHANG
+﻿@model BTNhom_MocPhuc.Models.NHANVIEN
 
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/LayoutQuanTri.cshtml";
+    string isAdmin = "";
 }
 
 <div class="container">
-    <h3 class="mt-4">Thông tin khách hàng</h3>
+    <h3 class="mt-4">Thông tin nhân viên</h3>
     <hr />
     <table cellpadding="0" cellspacing="0" style="font-size:14px;margin-left:50px;">
         <tr>
@@ -14,12 +15,17 @@
                 <table cellpadding="2" cellspacing="10">
                     <tr>
                         <td rowspan="8"><img src="/Images/@Html.DisplayFor(model => model.AVATAR)" width="100" height="100" style="border-radius: 50px; margin-right: 8px" /></td>
-                        <td class="fw-bold">Mã khách hàng:</td>
-                        <td class="ps-2">@Html.DisplayFor(model => model.MAKH)</td>
+                        <td class="fw-bold">Mã nhân viên:</td>
+                        <td class="ps-2">@Html.DisplayFor(model => model.MANV)</td>
                     </tr>
                     <tr>
                         <td class="fw-bold">Họ tên:</td>
                         <td class="ps-2">@Model.HO @Model.TENDEM @Model.TEN</td>
+                    </tr>
+
+                    <tr>
+                        <td class="fw-bold">Ngày sinh:</td>
+                        <td class="ps-2">@Model.NGAYSINH.Value.ToString("dd/MM/yyyy")</td>
                     </tr>
 
                     <tr>
@@ -35,6 +41,18 @@
                     <tr>
                         <td class="fw-bold">Email:</td>
                         <td class="ps-2">@Html.DisplayFor(model => model.EMAIL)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="fw-bold">Là Admin:</td>
+                        <td class="ps-2">
+                            @{if (Model.IsAdmin == true)
+                                { isAdmin = "Đúng"; }
+                                else
+                                { isAdmin = "Không"; }
+                            }
+                            @isAdmin
+                        </td>
                     </tr>
 
                 </table>

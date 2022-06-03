@@ -1,0 +1,78 @@
+﻿@model IEnumerable<BTNhom_MocPhuc.Models.CTHD>
+
+@{
+    ViewBag.Title = "MyDetailOrder";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+    int sumMoney = 0;
+}
+
+<div class="banner-page">
+    <h1 class="text-light fst-italic">Chi tiết hóa đơn</h1>
+</div>
+
+<div class="breadcrumb py-3">
+    <div class="container">
+        <a href="/">Trang chủ &nbsp;</a>
+        <a href="/KHACHHANG/MyOrder/@ViewBag.KH.MAKH">Đơn hàng của tôi &nbsp;</a>
+        <span class="text-origin">
+            Chi tiết hóa đơn
+        </span>
+    </div>
+</div>
+
+<div class="container">
+    <h3>Chi tiết hóa đơn #@ViewBag.IDHD <span class="fw-light">- @ViewBag.TT</span></h3>
+    <hr />
+
+    <div class="my-4 row">
+        <div class="col-6">
+            <p><span class="fw-bold">Tên người nhận:</span> @ViewBag.KH.HO @ViewBag.KH.TENDEM @ViewBag.KH.TEN</p>
+            <p><span class="fw-bold">SĐT:</span> @ViewBag.KH.SDT</p>
+            <p><span class="fw-bold">Nơi nhận:</span> @ViewBag.KH.DIACHI</p>
+        </div>
+        <div class="col-6">
+            <p><span class="fw-bold">Ngày đặt hàng:</span> @ViewBag.NgayDat.ToString("dd/MM/yyyy")</p>
+            <p><span class="fw-bold">Phương thức thanh toán:</span> @ViewBag.ptThanhToan</p>
+        </div>
+    </div>
+    <table class="table table-striped table-hover mt-4">
+        <thead>
+            <tr>
+                <th scope="col" class="text-center">Hình ảnh</th>
+                <th scope="col" class="text-center">Tên sản phẩm</th>
+                <th scope="col" class="text-center">Đơn giá</th>
+                <th scope="col" class="text-center">Số lượng</th>
+                <th scope="col" class="text-center">Thành tiền</th>
+                <th scope="col" class="text-center"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td class="text-center">
+                    <img src="/Images/@item.SANPHAM.IMG" width="64px" />
+                </td>
+                <td class="text-center">@item.SANPHAM.TENSP</td>
+                <td class="text-center">@item.SANPHAM.GIABAN.Value.ToString("N0") vnđ</td>
+                <td class="text-center w-25">
+                    <div class="form-group">
+
+                        <input class="d-inline form-control w-20 text-center soluong" type="text" disabled="disabled" value="@item.SOLUONG">
+
+                    </div>
+                </td>
+                <td class="text-center">@((item.SANPHAM.GIABAN * item.SOLUONG).Value.ToString("N0")) vnđ</td>
+                <td class="text-center"><a href="/SANPHAM/Details/@item.MASP" class="text-decoration-none">Mua lại</a></td>
+            </tr>
+                sumMoney += ((int)item.SANPHAM.GIABAN * item.SOLUONG);
+                ViewBag.sumMoney = sumMoney;
+            }
+        </tbody>
+    </table>
+    <div class="d-flex flex-column mt-5">
+        <div class="ms-auto mb-3 fs-5"><span class="fw-bold me-3 text-origin">Tổng tiền </span><span>@ViewBag.sumMoney.ToString("N0") vnđ</span></div>
+    </div>
+</div>
+
+

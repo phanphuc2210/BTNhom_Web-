@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/LayoutQuanTri.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-6 p-0">
+            <img src="/Images/hinhnen.jpeg" alt="hình nền" width="100%">
+        </div>
+        <div class="col-lg-6">
+            <div class="p-4">
+                <a class="btn btn-dark mx-2 mb-4" href="/SANPHAM/Index" role="button">Sản phẩm</a>
+                <a class="btn btn-dark mx-2 mb-4" href="/KHACHHANG/Index" role="button">Khách hàng</a>
+                <a class="btn btn-dark mx-2 mb-4" href="/NHANVIEN/Index" role="button">Nhân viên</a>
+                <a class="btn btn-dark mx-2 mb-4" href="/HOADONs/Index" role="button">Hóa đơn</a>
+                @if (ViewBag.Admin == false)
+                {
+                    <a class="btn btn-dark mx-2 mb-4" href="/QuanTri/NhanGiaoHang" role="button">Nhận giao hàng</a>
+                    <a class="btn btn-dark mx-2 mb-4" href="/QuanTri/DaGiaoHang" role="button">Xác nhận đã giao hàng</a>
+                }
+
+                @if (ViewBag.Admin == true)
+                {
+                    <a class="btn btn-dark mx-2 mb-4" href="/QuanTri/XacNhanHD" role="button">Xác nhận hóa đơn</a>
+                    <a class="btn btn-dark mx-2 mb-4" href="/QuanTri/DangKy" role="button">Đăng kí nhân viên</a>
+                    <a class="btn btn-dark mx-2 mb-4" href="/QuanTri/DoanhThu" role="button">Thống kê doanh thu</a>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+

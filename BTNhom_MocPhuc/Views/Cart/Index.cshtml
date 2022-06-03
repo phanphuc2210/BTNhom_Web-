@@ -31,6 +31,7 @@
         <tbody>
             @if (Model.Count > 0)
             {
+                int sumMoney = 0;
                 foreach (var item in Model)
                 {
                     <tr>
@@ -40,21 +41,23 @@
                         <td class="text-center">@item.sanPham.TENSP</td>
                         <td class="text-center">@item.sanPham.GIABAN.Value.ToString("N0") vnđ</td>
                         <td class="text-center w-25">
-                            <div class="form-group">
-                                <span class="btn fw-bold">-</span>
-                                <input class="d-inline form-control w-20 text-center soluong" data-id="@item.sanPham.MASP" type="text" value="@item.soLuong">
-                                <span class="btn fw-bold">+</span>
+                            <div class="form-group soluong">
+                                <span class="btn fw-bold decrease">-</span>
+                                <input class="d-inline form-control w-20 text-center txtsoluong" data-id="@item.sanPham.MASP" type="text" value="@item.soLuong" disabled="disabled">
+                                <span class="btn fw-bold increase">+</span>
                             </div>
                         </td>
                         <td class="text-center">@((item.sanPham.GIABAN * item.soLuong).Value.ToString("N0")) vnđ</td>
                         <td class="text-center"><a href="#" data-id="@item.sanPham.MASP" class="text-dark btnDelete"><i class="bi bi-trash3"></i></a></td>
                     </tr>
+                    sumMoney += ((int)item.sanPham.GIABAN * item.soLuong);
+                    ViewBag.sumMoney = sumMoney;
                 }
             }
             else
             {
                 <tr>
-                    <td colspan="6">Chưa có sản phẩm trong giỏi hàng. <a href="/">Về trang chủ</a></td>
+                    <td colspan="6" class="text-center">Chưa có sản phẩm trong giỏi hàng. <a href="/">Về trang chủ</a></td>
                 </tr>
             }
 
@@ -62,23 +65,32 @@
     </table>
 
 
-    <div class="d-flex mt-3">
-        <a href="/" class="btn btn-dark me-auto">Tiếp tục mua hàng</a>
-        <button type="button" class="btn btn-dark ms-auto" id="btnDeleteAll">Xóa giỏ hàng</button>
-        <button type="button" class="btn btn-dark ms-auto" id="btnUpdate">Cập nhật giỏ hàng</button>
-    </div>
 
-    <div class="d-flex flex-column mt-5">
-        <div class="ms-auto mb-3 fs-5"><span class="fw-bold me-3 text-origin">Tổng tiền thanh toán</span><span>2.000.000 vnd</span></div>
-        <a role="button" href="/Cart/Payment" class="btn btn-dark ms-auto">Thanh toán</a>
-    </div>
+    @if (Model.Count > 0)
+    {
+        <div class="d-flex mt-3">
+            <a href="/" class="btn btn-dark me-auto">Tiếp tục mua hàng</a>
+
+            <div class="ms-auto">
+                <button type="button" class="btn btn-dark" id="btnDeleteAll">Xóa giỏ hàng</button>
+                <button type="button" class="btn btn-dark" id="btnUpdate">Cập nhật giỏ hàng</button>
+            </div>
+        </div>
+
+
+        <div class="d-flex flex-column mt-5">
+            <div class="ms-auto mb-3 fs-5"><span class="fw-bold me-3 text-origin">Tổng tiền thanh toán</span><span>@ViewBag.sumMoney.ToString("N0") vnđ</span></div>
+            <a role="button" href="/Cart/Payment" class="btn btn-dark ms-auto">Thanh toán</a>
+        </div>
+    }
+
 </div>
 
 
 
 <script>
     $("#btnUpdate").off("click").on("click", function () {
-        var listSP = $(".soluong");
+        var listSP = $(".txtsoluong");
         var cartList = [];
         $.each(listSP, function (i, item) {
             cartList.push({
@@ -132,4 +144,19 @@
             }
         })
     });
+
+    $(".soluong").each(function (e) {
+        $(this).children(".decrease").on("click", function () {
+            console.log("tru");
+            if ($(this).parent().children('.txtsoluong').val() > 1)
+                $(this).parent().children('.txtsoluong').val(parseInt($(this).parent().children('.txtsoluong').val()) - 1)
+        })
+
+        $(this).children(".increase").on("click", function () {
+            console.log("cong");
+            $(this).parent().children('.txtsoluong').val(parseInt($(this).parent().children('.txtsoluong').val()) + 1)
+        })
+    })
+
+   
 </script>

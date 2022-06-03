@@ -9,6 +9,7 @@ namespace BTNhom_MocPhuc.Controllers
 {
     public class SiteController : Controller
     {
+        private MocPhucEntities db = new MocPhucEntities();
 
         // GET: Site
         public ActionResult Index()
@@ -32,6 +33,9 @@ namespace BTNhom_MocPhuc.Controllers
         {
             var cart = Session["CartSession"];
             var list = new List<CartItem>();
+
+            
+
             if (cart != null)
             {
                 list = (List<CartItem>)cart;

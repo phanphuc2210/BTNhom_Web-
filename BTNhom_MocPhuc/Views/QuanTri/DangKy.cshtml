@@ -1,23 +1,12 @@
-﻿@model BTNhom_MocPhuc.Models.KHACHHANG
+﻿@model BTNhom_MocPhuc.Models.NHANVIEN
 
 @{
     ViewBag.Title = "DangKy";
-    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+    Layout = "~/Views/Shared/LayoutQuanTri.cshtml";
 }
 
-<div class="banner-page">
-    <h1 class="text-light fst-italic">Đăng Ký Tài Khoản</h1>
-</div>
-
-<div class="breadcrumb py-3">
-    <div class="container">
-        <a href="/">Trang chủ &nbsp;</a>
-        <span class="text-origin">Đăng ký tài khoản</span>
-    </div>
-</div>
-
 <div class="container d-flex flex-column align-items-center">
-    <form class="d-flex flex-column w-50 mt-4" method="post" action="/KHACHHANG/DangKy">
+    <form class="d-flex flex-column w-50 mt-4" method="post" action="/QuanTri/DangKy">
         @Html.AntiForgeryToken()
 
 
@@ -48,6 +37,12 @@
         </div>
 
         <div class="form-group mb-3">
+            <label for="NGAYSINH" class="form-label">Ngày sinh <span class="text-danger">*</span></label>
+            @Html.EditorFor(model => model.NGAYSINH, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+            @Html.ValidationMessageFor(model => model.NGAYSINH, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group mb-3">
             <label for="EMAIL" class="form-label">Email <span class="text-danger">*</span></label>
             @Html.EditorFor(model => model.EMAIL, new { htmlAttributes = new { @class = "form-control", @type = "email", @placeholder = "vd: name@example.com" } })
             @Html.ValidationMessageFor(model => model.EMAIL, "", new { @class = "text-danger" })
@@ -55,8 +50,18 @@
             {
                 <span class="badge badge-danger">@ViewBag.error</span>
             }
-
         </div>
+
+        <div class="form-group mb-3">
+            <label for="TENDN" class="form-label">Tên đăng nhập <span class="text-danger">*</span></label>
+            @Html.EditorFor(model => model.TENDN, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.TENDN, "", new { @class = "text-danger" })
+            @if (ViewBag.error2 != null)
+            {
+                <span class="badge badge-danger">@ViewBag.error2</span>
+            }
+        </div>
+
         <div class="form-group mb-3">
             <label for="PASS" class="form-label">Mật khẩu <span class="text-danger">*</span></label>
             @Html.EditorFor(model => model.PASS, new { htmlAttributes = new { @class = "form-control", @type = "password" } })
@@ -70,6 +75,17 @@
         </div>
 
         <div class="form-group mb-3">
+            <label for="IsAdmin" class="form-label">Là Admim <span class="text-danger">*</span></label>
+            <div class="col-md-10">
+                <div class="checkbox">
+                    Đúng @Html.RadioButtonFor(model => model.IsAdmin, "True", new { @checked = "checked" }) &nbsp;
+                    Không @Html.RadioButtonFor(model => model.IsAdmin, "False")
+                    @Html.ValidationMessageFor(model => model.IsAdmin, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group mb-3">
             <label for="SDT" class="form-label">SĐT <span class="text-danger">*</span></label>
             @Html.EditorFor(model => model.SDT, new { htmlAttributes = new { @class = "form-control", @placeholder = "vd: 0708488401" } })
             @Html.ValidationMessageFor(model => model.SDT, "", new { @class = "text-danger" })
@@ -79,30 +95,14 @@
             @Html.EditorFor(model => model.DIACHI, new { htmlAttributes = new { @class = "form-control", @placeholder = "vd: 56KA Cù Lao Thượng, Vĩnh Thọ, Nha Trang, Khánh Hòa" } })
             @Html.ValidationMessageFor(model => model.DIACHI, "", new { @class = "text-danger" })
         </div>
-        <!--
-    <div class="mb-3">
-        <label class="form-label">Địa chỉ <span class="text-danger">*</span></label>
-        <div class="d-flex ">
-            <input type="text" class="form-control me-1" id="house-number" placeholder="Số nhà" required>
-            <input type="text" class="form-control me-1" id="wards" placeholder="Phường/Xã" required>
-            <input type="text" class="form-control me-1" id="city" placeholder="Thành phố" required>
-            <input type="text" class="form-control" id="province" placeholder="Tỉnh" required>
-        </div>
-    </div>
-    -->
+
+
+
 
         <button class="btn btn-dark mx-auto mt-3" type="submit">ĐĂNG KÝ</button>
     </form>
 
-    <!--
-        
-    <div class="w-50 mt-4 p-2 bg-gray d-flex flex-column align-items-center">
-        <p class="mb-1">Hoặc đăng nhập bằng</p>
-        <div>
-            <img width="129px" height="37px" alt="facebook-login-button" src="//bizweb.dktcdn.net/assets/admin/images/login/fb-btn.svg">
-            <img width="129px" height="37px" alt="google-login-button" src="//bizweb.dktcdn.net/assets/admin/images/login/gp-btn.svg">
-        </div>
-    </div>
-    -->
+    
 </div>
+
 

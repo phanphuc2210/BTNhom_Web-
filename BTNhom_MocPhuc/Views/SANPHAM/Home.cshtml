@@ -35,21 +35,21 @@
 
 
 <div class="container product my-5 d-flex flex-column">
-    <h3 class="text-center">Sản phẩm bán chạy</h3>
+    <h3 class="text-center">Sản phẩm mới</h3>
 
     <div class="row mt-3 gy-3">
 
 
-        @foreach (var item in ViewBag.SPBanChay)
+        @foreach (var item in ViewBag.SPMoi)
         {
 
             <div class="col-3" data-aos="zoom-in-up">
                 <div class="card w-100 product-item" style="width: 18rem;">
-                    <a href="SANPHAM/Details/@item.MASP">
+                    <a href="/SANPHAM/Details/@item.MASP">
                         <img src="/Images/@item.IMG" class="card-img-top" style="height: 250px" alt="@item.TENSP">
                     </a>
                     <div class="card-body">
-                        <a href="SANPHAM/Details/@item.MASP" class="text-decoration-none text-dark">
+                        <a href="/SANPHAM/Details/@item.MASP" class="text-decoration-none text-dark">
                             <h5 class="card-title fs-6 ">@item.TENSP</h5>
                         </a>
                         <p class="card-text text-danger">@item.GIABAN.ToString("N0") vnđ</p>
@@ -61,7 +61,7 @@
         }
     </div>
 
-    <button type="button" class="btn btn-outline-dark mx-auto my-3">Xem thêm</button>
+    <a role="button" href="/SANPHAM/Categories" class="btn btn-outline-dark mx-auto my-3">Xem thêm</a>
 </div>
 
 <div class="container banner my-5">
@@ -87,20 +87,20 @@
 </div>
 
 <div class="container product my-5 d-flex flex-column">
-    <h3 class="text-center">Sản phẩm mới</h3>
+    <h3 class="text-center">Sản phẩm bạn có thể thích</h3>
 
     <div class="row mt-3 gy-3">
 
 
-        @foreach (var item in ViewBag.SPMoi)
+        @foreach (var item in ViewBag.SPGoiY)
         {
             <div class="col-3 " data-aos="zoom-in-up">
                 <div class="card w-100 product-item" style="width: 18rem;">
-                    <a href="SANPHAM/Details/@item.MASP">
+                    <a href="/SANPHAM/Details/@item.MASP">
                         <img src="/Images/@item.IMG" class="card-img-top" style="height: 250px" alt="@item.TENSP">
                     </a>
                     <div class="card-body">
-                        <a href="SANPHAM/Details/@item.MASP" class="text-decoration-none text-dark">
+                        <a href="/SANPHAM/Details/@item.MASP" class="text-decoration-none text-dark">
                             <h5 class="card-title fs-6">@item.TENSP</h5>
                         </a>
                         <p class="card-text text-danger">@item.GIABAN.ToString("N0")  vnđ</p>
@@ -111,7 +111,7 @@
         }
     </div>
 
-    <button type="button" class="btn btn-outline-dark mx-auto my-3">Xem thêm</button>
+    <a role="button" href="/SANPHAM/Categories" class="btn btn-outline-dark mx-auto my-3">Xem thêm</a>
 </div>
 
 

@@ -1,9 +1,12 @@
-﻿@model IEnumerable<BTNhom_MocPhuc.Models.KHACHHANG>
+﻿@model IEnumerable<BTNhom_MocPhuc.Models.HOADON>
+@using BTNhom_MocPhuc.Models;
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/LayoutQuanTri.cshtml";
-    var grid = new WebGrid(Model, canPage: true, defaultSort: "TENKH", rowsPerPage: 10);
+    var grid = new WebGrid(Model, canPage: true, defaultSort: "NGAYDATHANG", rowsPerPage: 10);
+    MocPhucEntities db = new MocPhucEntities();
+    int sumMoney = 0;
 }
 
 <style type="text/css">
@@ -49,8 +52,8 @@
 </style>
 
 <div class="container">
-    <h3 class="my-3">Danh sách khách hàng</h3>
-
+    <h3 class="my-3">Danh sách đơn hàng</h3>
+    <p><a href="/HOADONs/TimKiemNC">Tìm kiếm</a></p>
     @grid.GetHtml(
     tableStyle: "table table-bordered table-hover",
     footerStyle: "grid-footer",
@@ -59,18 +62,18 @@
     alternatingRowStyle: "alternatingRowStyle",
     columns: new[]  // colums in grid
         {
-            grid.Column("STT",format: item => item.WebGrid.Rows.IndexOf(item) + 1 + Math.Round(Convert.ToDouble(grid.TotalRowCount / grid.PageCount) / grid.RowsPerPage) * grid.RowsPerPage * grid.PageIndex),
-            grid.Column("MAKH","Mã khách hàng"), //the model fields to display
-            grid.Column("AVATAR","Ảnh đại diện", format: @<text><img src="/Images/@item.AVATAR" alt="@item.TEN" width="50" height="50" /></text>),
-            grid.Column("","Họ tên", format: @<text> @item.HO @item.TENDEM @item.TEN </text>),
-            grid.Column("DIACHI","Địa chỉ"),
-            grid.Column("SDT","SĐT"),
+            grid.Column("IDHD","Mã hóa đơn", format: @<text>#@item.IDHD</text>), //the model fields to display
+            grid.Column("NGAYDATHANG","Ngày đặt", format:@<text> @item.NGAYDATHANG.ToString("dd/MM/yyyy")</text>),
+            grid.Column("NGAYGIAOHANG","Ngày giao hàng", format:@<text> @item.NGAYGIAOHANG.ToString("dd/MM/yyyy")</text>),
+            grid.Column("","Nhân viên duyệt", format: (@item) => item.MANVDUYET == null?"": item.NHANVIEN.HO+" "+item.NHANVIEN.TENDEM+" "+item.NHANVIEN.TEN),
+            grid.Column("","Nhân viên giao", format: (@item) => item.MANVGIAO == null?"": item.NHANVIEN1.HO+" "+item.NHANVIEN1.TENDEM+" "+item.NHANVIEN1.TEN),
+            grid.Column("TINHTRANG1.TENTINHTRANG","Tình trạng"),
             grid.Column(format: @<text>
-                <a href="@Url.Action("Details", new { id = item.MAKH})" class="edit-btn text-primary">
+                <a href="@Url.Action("Details", new { id = item.IDHD})" class="edit-btn text-primary">
                     Chi tiết
                 </a>
             </text>),
 
-        }
+         }
     )
 </div>

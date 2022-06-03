@@ -8,7 +8,7 @@
         <EntityTypeShape EntityType="MocPhucModel.BINHLUAN" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
         <EntityTypeShape EntityType="MocPhucModel.CTHD" Width="1.5" PointX="8.25" PointY="5.25" IsExpanded="true" />
         <EntityTypeShape EntityType="MocPhucModel.HOADON" Width="1.5" PointX="6" PointY="4.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="MocPhucModel.KHACHHANG" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MocPhucModel.KHACHHANG" Width="1.5" PointX="3.875" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="MocPhucModel.LOAISP" Width="1.5" PointX="1.5" PointY="9.625" IsExpanded="true" />
         <EntityTypeShape EntityType="MocPhucModel.NHANVIEN" Width="1.5" PointX="3.75" PointY="10.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MocPhucModel.PHUONGTHUCTT" Width="1.5" PointX="3.75" PointY="15.25" IsExpanded="true" />

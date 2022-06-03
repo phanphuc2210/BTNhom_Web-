@@ -2,89 +2,99 @@
 
 @{
     ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/LayoutQuanTri.cshtml";
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript">
+    $(function ()
+    {
+        var fileupload = $("#Avatar");
+        var image = $("#FileUpload");
+        image.click(function ()
+        {
+            fileupload.click();
+        });
+        fileupload.change(function ()
+        {
+            var fileName = $(this).val().split('\\')[$(this).val().split('\\').length - 1];
+            document.getElementById("IMG").value=fileName;
+        });
+    });
+    </script>
 }
 
-<h2>Edit</h2>
+
+<div class="container ">
+    @using (Html.BeginForm("Edit", "SANPHAM", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal w-50">
+            <h3 class="mt-3">Thông tin sản phẩm</h3>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.MASP)
+            @Html.HiddenFor(model => model.NGAYTHEM)
+
+            <div class="form-group my-4">
+                <div class="">
+                    @Html.HiddenFor(model => model.IMG)
+                    <img src="/Images/@Model.IMG" alt="@Model.TENSP" width="150" height="150" style="border-radius: 200px" />
+                    <input type="file" name="Avatar" id="Avatar" />
+                </div>
+            </div>
 
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>SANPHAM</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.MASP)
+            <div class="form-group my-4">
+                @Html.LabelFor(model => model.TENSP, "Tên sản phẩm", htmlAttributes: new { @class = "control-label" })
+                <div class="">
+                    @Html.EditorFor(model => model.TENSP, "Tên sản phẩm", new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.TENSP, "", new { @class = "text-danger" })
+                </div>
+            </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.MALSP, "MALSP", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("MALSP", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.MALSP, "", new { @class = "text-danger" })
+            <div class="form-group my-4">
+                @Html.LabelFor(model => model.SOLUONGTON, "Số lượng tồn", htmlAttributes: new { @class = "control-label" })
+                <div class="">
+                    @Html.EditorFor(model => model.SOLUONGTON, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.SOLUONGTON, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group my-4">
+                @Html.LabelFor(model => model.MOTA, "Mô tả", htmlAttributes: new { @class = "control-label" })
+                <div class="">
+                    <textarea cols="70" rows="3" name="MOTA">@Model.MOTA</textarea>
+                    @Html.ValidationMessageFor(model => model.MOTA, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group my-4">
+                @Html.LabelFor(model => model.GIABAN, "Giá bán", htmlAttributes: new { @class = "control-label" })
+                <div class="">
+                    @Html.EditorFor(model => model.GIABAN, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.GIABAN, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group my-4">
+                @Html.LabelFor(model => model.MALSP, "Loại sản phẩm", htmlAttributes: new { @class = "control-label" })
+                <div class="">
+                    @Html.DropDownList("MALSP", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.MALSP, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group mb-4">
+                <div class="col-md-offset-2 col-md-10">
+                    <button type="submit" class="btn btn-dark">Lưu thay đổi</button>
+                </div>
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.TENSP, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TENSP, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TENSP, "", new { @class = "text-danger" })
-            </div>
-        </div>
+    }
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.SOLUONGTON, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.SOLUONGTON, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.SOLUONGTON, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IMG, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.IMG, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.IMG, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.MOTA, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.MOTA, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.MOTA, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.GIABAN, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.GIABAN, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.GIABAN, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.NGAYTHEM, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.NGAYTHEM, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.NGAYTHEM, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
+    <a href="/SANPHAM/Index" class="text-decoration-none">Quay lại</a>
 </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

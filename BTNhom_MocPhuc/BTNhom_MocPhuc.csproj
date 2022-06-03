@@ -130,8 +130,11 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CartController.cs" />
+    <Compile Include="Controllers\HOADONsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KHACHHANGController.cs" />
+    <Compile Include="Controllers\NHANVIENController.cs" />
+    <Compile Include="Controllers\QuanTriController.cs" />
     <Compile Include="Controllers\SANPHAMController.cs" />
     <Compile Include="Controllers\SiteController.cs" />
     <Compile Include="Global.asax.cs">
@@ -241,7 +244,6 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\SANPHAM\Create.cshtml" />
-    <Content Include="Views\SANPHAM\Delete.cshtml" />
     <Content Include="Views\SANPHAM\Details.cshtml" />
     <Content Include="Views\SANPHAM\Edit.cshtml" />
     <Content Include="Views\SANPHAM\Index.cshtml" />
@@ -253,8 +255,6 @@
     <Content Include="Views\Site\GioHang.cshtml" />
     <Content Include="Views\SANPHAM\Home.cshtml" />
     <Content Include="Views\SANPHAM\Categories.cshtml" />
-    <Content Include="Views\KHACHHANG\Create.cshtml" />
-    <Content Include="Views\KHACHHANG\Delete.cshtml" />
     <Content Include="Views\KHACHHANG\Details.cshtml" />
     <Content Include="Views\KHACHHANG\Edit.cshtml" />
     <Content Include="Views\KHACHHANG\Index.cshtml" />
@@ -263,6 +263,24 @@
     <Content Include="Views\Shared\headerCart.cshtml" />
     <Content Include="Views\Cart\Payment.cshtml" />
     <Content Include="Views\Cart\Success.cshtml" />
+    <Content Include="Views\KHACHHANG\MyOrder.cshtml" />
+    <Content Include="Views\KHACHHANG\MyDetailOrder.cshtml" />
+    <Content Include="Views\Shared\LayoutQuanTri.cshtml" />
+    <Content Include="Views\QuanTri\Index.cshtml" />
+    <Content Include="Views\HOADONs\Details.cshtml" />
+    <Content Include="Views\HOADONs\Index.cshtml" />
+    <Content Include="Views\SANPHAM\Comments.cshtml" />
+    <Content Include="Views\NHANVIEN\Details.cshtml" />
+    <Content Include="Views\NHANVIEN\Edit.cshtml" />
+    <Content Include="Views\NHANVIEN\Index.cshtml" />
+    <Content Include="Views\QuanTri\DangKy.cshtml" />
+    <Content Include="Views\QuanTri\DangNhap.cshtml" />
+    <Content Include="Views\SANPHAM\TimKiemNC.cshtml" />
+    <Content Include="Views\QuanTri\XacNhanHD.cshtml" />
+    <Content Include="Views\QuanTri\NhanGiaoHang.cshtml" />
+    <Content Include="Views\QuanTri\DaGiaoHang.cshtml" />
+    <Content Include="Views\QuanTri\DoanhThu.cshtml" />
+    <Content Include="Views\HOADONs\TimKiemNC.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
