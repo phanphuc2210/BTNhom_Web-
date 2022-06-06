@@ -11,7 +11,10 @@ namespace BTNhom_MocPhuc.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+
     public partial class NHANVIEN
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -20,20 +23,48 @@ namespace BTNhom_MocPhuc.Models
             this.HOADONs = new HashSet<HOADON>();
             this.HOADONs1 = new HashSet<HOADON>();
         }
-    
+
         public string MANV { get; set; }
+        [Required(ErrorMessage = "Không ???c ?? tr?ng !!!")]
+        [Display(Name = "Tên")]
         public string TEN { get; set; }
+        [Display(Name = "Tên ??m")]
         public string TENDEM { get; set; }
+        [Display(Name = "H?")]
+        [Required(ErrorMessage = "Không ???c ?? tr?ng !!!")]
         public string HO { get; set; }
+        [Display(Name = "Ngày sinh")]
+        [Required(ErrorMessage = "Không ???c ?? tr?ng !!!")]
         public Nullable<System.DateTime> NGAYSINH { get; set; }
+        [Display(Name = "??a ch?")]
+        [Required(ErrorMessage = "Không ???c ?? tr?ng !!!")]
         public string DIACHI { get; set; }
+        [Display(Name = "S?T")]
+        [Required(ErrorMessage = "Không ???c ?? tr?ng !!!")]
         public string SDT { get; set; }
+       
         public string AVATAR { get; set; }
+        [Required(ErrorMessage = "Không ???c ?? tr?ng !!!")]
+        [Display(Name = "Email")]
         public string EMAIL { get; set; }
+        [Required(ErrorMessage = "Không ???c ?? tr?ng !!!")]
+        [Display(Name = "Tên ??ng nh?p")]
         public string TENDN { get; set; }
+        [Required(ErrorMessage = "Không ???c ?? tr?ng !!!")]
+        [Display(Name = "M?t kh?u")]
         public string PASS { get; set; }
+        [Required(ErrorMessage = "Không ???c ?? tr?ng !!!")]
+        [Display(Name = "Là Admin")]
         public bool IsAdmin { get; set; }
-    
+
+        [NotMapped]
+        [Required(ErrorMessage = "Không ???c ?? tr?ng !!!")]
+        [System.ComponentModel.DataAnnotations.Compare("PASS", ErrorMessage = "M?t kh?u không kh?p !!!")]
+        [Display(Name = "Xác nh?n m?t kh?u")]
+        public string ConfirmPassword { get; set; }
+
+
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HOADON> HOADONs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
