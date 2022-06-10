@@ -41,9 +41,9 @@
                         <td class="text-center">@item.sanPham.TENSP</td>
                         <td class="text-center">@item.sanPham.GIABAN.Value.ToString("N0") vnđ</td>
                         <td class="text-center w-25">
-                            <div class="form-group soluong">
+                            <div class="form-group soluong" data-soluong="@item.sanPham.SOLUONGTON">
                                 <span class="btn fw-bold decrease">-</span>
-                                <input class="d-inline form-control w-20 text-center txtsoluong" data-id="@item.sanPham.MASP" type="text" value="@item.soLuong" disabled="disabled">
+                                <input class="d-inline form-control w-20 text-center txtsoluong" data-id="@item.sanPham.MASP"  type="text" value="@item.soLuong" disabled="disabled">
                                 <span class="btn fw-bold increase">+</span>
                             </div>
                         </td>
@@ -154,7 +154,9 @@
 
         $(this).children(".increase").on("click", function () {
             console.log("cong");
-            $(this).parent().children('.txtsoluong').val(parseInt($(this).parent().children('.txtsoluong').val()) + 1)
+            if ($(this).parent().children('.txtsoluong').val() < $(this).parent().data("soluong")) {
+                $(this).parent().children('.txtsoluong').val(parseInt($(this).parent().children('.txtsoluong').val()) + 1)
+            }
         })
     })
 

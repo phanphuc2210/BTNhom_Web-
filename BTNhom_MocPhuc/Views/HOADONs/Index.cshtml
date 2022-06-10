@@ -1,12 +1,11 @@
 ﻿@model IEnumerable<BTNhom_MocPhuc.Models.HOADON>
-@using BTNhom_MocPhuc.Models;
+
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/LayoutQuanTri.cshtml";
     var grid = new WebGrid(Model, canPage: true, defaultSort: "NGAYDATHANG", rowsPerPage: 10);
-    MocPhucEntities db = new MocPhucEntities();
-    int sumMoney = 0;
+    
 }
 
 <style type="text/css">

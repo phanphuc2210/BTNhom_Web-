@@ -23,7 +23,7 @@
             <img src="/Images/@Model.IMG" width="100%">
         </div>
         <div class="col-lg-7 d-flex flex-column">
-            <h3>@Model.TENSP <span class="fs-7">(@Model.SOLUONGTON)</span></h3>
+            <h3>@Model.TENSP <span class="fs-7">(còn lại @Model.SOLUONGTON)</span></h3>
             <div class="hstack gap-3">
                 <span class="fw-bold fs-7">Mã sản phẩm:</span>
                 <span id="idsp" class="fs-7">@Model.MASP</span>
@@ -53,7 +53,7 @@
                 }
                 else
                 {
-                    <a role="button" class="btn btn-secondary w-100 mt-3" id="add-cart">Tạm hết hàng</a>
+                    <button class="btn btn-secondary w-100 mt-3" disabled="disabled">Tạm hết hàng</button>
                 }
             </div>
         </div>
@@ -136,7 +136,9 @@
     })
 
     const handleIncrease = () => {
-        $('#soluong').val(parseInt($('#soluong').val()) + 1)
+        if ($('#soluong').val() < @Model.SOLUONGTON) {
+            $('#soluong').val(parseInt($('#soluong').val()) + 1)
+        }
     }
     const handleDecrease = () => {
         if ($('#soluong').val() > 1)
